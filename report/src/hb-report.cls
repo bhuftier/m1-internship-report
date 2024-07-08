@@ -27,13 +27,13 @@
     \onecolumn
     \centering
     \thispagestyle{empty}
-    \Large\@title\\[5pt]
-    \LARGE\@subject\\[5pt]
+    \Large\@title\\[15pt]
+    \LARGE\@subject\\[15pt]
     \Large
     \setlength{\tabcolsep}{20pt}
     \begin{tabular}[t]{c}
         \@intern
-    \end{tabular}\\[10pt]
+    \end{tabular}\\[15pt]
     \large
     \begin{tabular}[t]{c}
         \@supervisor
@@ -43,7 +43,7 @@
     \hypersetup{hidelinks}
     \tableofcontents
     \newpage
-    \twocolumn
+    % \twocolumn
     \endgroup
 }
 

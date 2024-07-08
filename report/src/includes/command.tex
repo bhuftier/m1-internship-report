@@ -1,2 +1,39 @@
 \newtheorem{lemma}{Lemma}
 \newtheorem{corollary}{Corollary}
+
+\newcommand\CC[1]{\texttt{#1}}
+\newcommand\prob[1]{\textsc{#1}}
+\def\NP{\CC{NP}}
+\def\P{\CC{P}}
+\def\O{\pazocal{O}}
+\def\N{\mathbb{N}}
+\def\tw{\text{tw}}
+\def\vc{\text{vc}}
+\def\poly{\text{poly}}
+
+\makeatletter
+\newcommand\problemtitle[1]{\gdef\@problemtitle{#1}}
+\newcommand\probleminput[1]{\gdef\@probleminput{#1}}
+\newcommand\problemquestion[1]{\gdef\@problemquestion{#1}}
+
+\NewEnviron{problem}{
+    \problemtitle{}
+    \probleminput{}
+    \problemquestion{}
+    \BODY
+    \par\addvspace{.5\baselineskip}
+    \noindent
+    \prob{\@problemtitle}\\
+    \textbf{Input:} \@probleminput\\
+    \textbf{Question:} \@problemquestion
+    \par\addvspace{.5\baselineskip}
+}
+\makeatother
+
+% \newcommand\problem[3]{
+%     \prob{#1}
+
+%     \textbf{Input:} #2
+
+%     \textbf{Question:} #3
+% }
