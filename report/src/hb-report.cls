@@ -47,9 +47,9 @@
     \endgroup
 }
 
-\newenvironment{proof}{\paragraph{Demonstration}}{\hfill$\square$\medskip}
+\newenvironment{proof}{\paragraph{Proof}}{\hfill$\square$\medskip}
 
-\newcommand{\todo}[1]{{\color{red}-- #1 --}}
+\newcommand{\todo}[1]{{\color{red}-- todo: #1 --}}
 \newcommand{\hr}{%
     \medskip%
     \noindent\makebox[\linewidth]{\rule{\columnwidth}{0.4pt}}%
