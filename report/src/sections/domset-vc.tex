@@ -1,2 +1,68 @@
 \section{Faster algorithm for \prob{DominatingSet}/\vc}
 \label{section:domset-vc}
+
+A better algorithm than $\O^\star(3^\vc)$ for $\prob{DominatingSet}/\vc$ was known before this internship. However, we developed our own solution and will present our proof as an example of how we can achieve a better algorithm for such a problem and parameter. First of all, Let us recall the \prob{SetCover} problem:
+
+\begin{problem}
+    \problemtitle{SetCover}
+    \probleminput{A finite set $U$ (called the universe), a collection of subset $\pazocal{G} = \{S_1, \dots, S_m\}$ such that $S_i \subseteq U$}
+    \problemquestion{What is the minimum number of subsets from the collection such that their union covers the entire universe $U$? In other words, what is the smallest $k$ such that $\F \subseteq \pazocal{G}$, $|\F| = k$, and $\bigcup_{X \in \F} = U$?}
+\end{problem}
+
+For $(U, \pazocal{G})$ an instance of \prob{SetCover}, and for $X \subseteq U$, we denote
+@inproceedings{narayanaswamy2012lp,
+  title={LP can be a cure for parameterized problems},
+  author={Narayanaswamy, NS and Raman, Venkatesh and Ramanujan, MS and Saurabh, Saket},
+  booktitle={29th International Symposium on Theoretical Aspects of Computer Science (STACS 2012)},
+  year={2012},
+  organization={Schloss-Dagstuhl-Leibniz Zentrum f{\"u}r Informatik}
+ by $\Phi(X)$ the smallest set cover of $X$.
+
+\begin{lemma}
+    \label{lemma:set-cover}
+    Given an instance $(U, \pazocal{G})$ of \prob{SetCover}, there exists an algorithm running in time $\O^\star(2^{|U|})$ which computes $\Phi(X)$ for every $X \subseteq U$.
+\end{lemma}
+
+\begin{proof}
+    Let us denotes $\phi(X)$ the size of the smallest set cover of $X$. We can compute $\phi(X)$ using the following dynamic programming approach:
+    \begin{align*}
+        &\phi(\emptyset) = 0\\
+        &\phi(X) = \min\{1 + \phi(X \backslash S),\ S \cap X \neq \emptyset\}
+    \end{align*}
+    
+    To compute $\Phi(X)$, follow the same dynamic programming approach: $\Phi(\emptyset) = \emptyset$ and then track the current construction of the best set cover. We can demonstrate that $\Phi(X)$ is one of the smallest set covers of $X$ by induction:
+    \begin{itemize}
+        \item $\Phi(\emptyset)$ is obviously $\emptyset$.
+        \item Suppose $\F \subseteq \pazocal{G}$ is one of the best set covers of $X$. Choose $S \in \F$ and remove it from $X$. You obtain a strictly smaller set, since $S \cap X \neq \emptyset$, or $\F$ would not have been one of the best set covers of $X$. Observe that $\F \backslash \{S\}$ is a set cover of $X \backslash S$. By induction, $\Phi(X \backslash S)$ is one of the best set covers for $X \backslash S$. Thus, we have $|\F \backslash \{S\}| \geq |\Phi(X \backslash S)|$, leading to $|\F| \geq |\Phi(X \backslash S) \cup \{S\}|$. By minimality of $\F$, $\Phi(X \backslash S) \cup \{S\}$ is one of the smallest set covers of $X$. This set will be checked during the construction of $\Phi(X)$, which concludes that $\Phi(X)$ is one of the smallest set covers of $X$.
+    \end{itemize}
+    
+    Each computation takes time $\poly(|U|, |\pazocal{G}|)$, and there are $2^{|U|}$ different subsets $X$. This results in an overall running time of $\O^\star(2^{|U|})$.
+\end{proof}
+
+\input{figures/domset-vc.tex}
+
+\begin{theorem}
+    Let $G$ be a graph, and let $X$ be a vertex cover of size $|X| = l$. There exists an algorithm that computes $\prob{DominatingSet}/\vc$ in running time $O^\star(2^l)$.
+\end{theorem}
+
+\begin{proof}
+    \def\D{\pazocal{D}}
+    Let $I$ denote the graph outside of $X$: $I = G - X$. Note that $I$ is an independent set (see \reffigure{fig:domset-vc}). We can think of $(X, I)$ as an instance of \prob{SetCover}; the vertices of $X$ represent the universe, and each vertex in $I$ represents a subset of the universe defined by its neighbours in $X$. Thus, by \reflemma{lemma:set-cover}, we can compute $\Phi$ for $(X, I)$ in time $O^\star(2^{|X|})$.
+
+    \medskip
+    H
+    Consider the optimization problem of \prob{DominatingSet}: we want to find the smallest possible set of vertices that dominates $G$. Let us call $\D$ the unkown best dominating set of $G$. Assume we know $A = \D \cap X$, then we can find $\D$ in polynomial time (see \reffigure{fig:domset-vc} for an illustration of the construction of $\D$):
+    \begin{itemize}
+        \item First, $\D$ needs to dominate every vertex in $I$. Let $B$ be the set of all vertices in $I$ with no neighbours in $A$. It is obvious that $I - B$ is dominated by $A$. However, no vertex in $B$ can be dominated by any vertex in $X$, and since $B$ is an independent set, the only way to dominate $B$ is to take every vertex of $B$ in $\D$.
+        \item Finally, $\D$ needs to dominate every vertex in $X$. Let $C$ be the set of all non-yet-dominated vertices in $X$ (i.e., vertices with no neighbours in $A$ and no neighbours in $B$). By hypothesis, we know that $C \cap \D = \emptyset$. Therefore, we need to select vertices from $I$ to dominate $C$. Since $\D$ should be of minimum size, we want the smallest set of vertices from $I$ that dominates $C$, which is exactly $\Phi(C)$. Thus we have $\D = A \uplus B \uplus \Phi(C)$.
+    \end{itemize}
+    
+    \medskip
+
+    We succeed in constructing $\D$ by assuming we knew $A = X \cap \D$. Thus, we can test every subset $A \subseteq X$, apply the previous construction to create a dominating set for each $A$, and select the smallest dominating set. Therefore, the size of $\D$ is given by
+    $$|\D| = \min_{A \subseteq X}\{|A| + |B| + \Phi(C)\}$$
+
+    Since there are exactly $2^{|X|}$ subsets of $X$, the total running time of this algorithm is $O^\star(2^{|X|}) = O^\star(2^l)$.
+\end{proof}
+
+One flaw of this algorithm is that it requires exponential space to store $\Phi$. An interesting area of future work could be to determine if we can find an algorithm with time complexity $O^\star((3 - \varepsilon)^\vc)$ for $\prob{DominatingSet}/\vc$ that uses only polynomial space.

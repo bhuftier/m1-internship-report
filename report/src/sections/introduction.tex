@@ -6,11 +6,11 @@ $\NP$-hard problems are widely recognized as unsolvable in polynomial time unles
 % (maybe remove this part
 % Parameterized complexity aims to classify computational problems according to their inherent difficulty with respect to multiple input parameters. The complexity of a problem is then evaluated as a function of these parameters.
 % )
-Formally, a parameterized problem is defined as a language $L \subseteq \Sigma^* \times \N$, and a parameterized class $\CC{C}$ is described by a function $f_{\CC{C}} : \N \times \N \mapsto \N$. We say that $L \in \CC{C}$ if there exists an algorithm that decides whether $(x, k) \in L$ in time $\O(f_{\CC{C}}(|x|, k))$. Of course, we would prefer to find functions that are not exponential in $n = |x|$. Thus, we will focus on the class of parameterized problems that can be solved in $f(k)\cdot n^{\O(1)}$ time, for any function $f$. This class is called \textit{Fixable Parameter Tractable} (\CC{FPT}).
+Formally, a parameterized problem is defined as a language $L \subseteq \Sigma^* \times \N$, and a parameterized class $\CC{C}$ is described by a function $f_{\CC{C}} : \N \times \N \mapsto \N$. We say that $L \in \CC{C}$ if there exists an algorithm that decides whether $(x, k) \in L$ in time $\O(f_{\CC{C}}(|x|, k))$. Of course, we would prefer to find functions that are not exponential in $n = |x|$. Thus, we will focus on the class of parameterized problems that can be solved in $f(k)\cdot n^{\O(1)}$ time, for any function $f$. This class is called \textit{Fixed Parameter Tractable} (\CC{FPT}).
 
 \medskip
 
-But let's dive into a concrete problem to fully understand what we are talking about. Let's recall the \prob{VertexCover} problem:
+But Let us dive into a concrete problem to fully understand what we are talking about. Let us recall the \prob{VertexCover} problem:
 
 \begin{problem}
     \problemtitle{VertexCover}
@@ -18,34 +18,34 @@ But let's dive into a concrete problem to fully understand what we are talking a
     \problemquestion{Does there exist a subset of vertices $X\subseteq V$ such that $|X| \leq k$ and $X$ is a \textit{vertex cover} of $G$, meaning every edge in $E$ has at least one endpoint in $X$?}
 \end{problem}
 
-Observe that given a subset $X \subseteq V$, we can check in polynomial time if $|X| \leq k$ and if $X$ is a vertex cover of $G$. Thus, we can trivially answer the question in time $\O(2^n \cdot n^{\O(1)})$, where $n = |V|$, by testing every subset $X \subseteq V$. This complexity can be improved to $\O(\varphi^n \cdot n^{O(1)})$, where $\varphi \approx 1.618$ is the golden ratio, by observing two things: firstly, we can consider that every vertex has at least one neighbour, or we can remove it from the graph without changing the best vertex cover; secondly, for every vertex $x$, if $x$ is not in the vertex cover of $G$, then every neighbour of $x$ needs to be in the vertex cover. These observations lead to the following recurrence: $T(n) \leq T(n - 1) + T(n - 2)$; wheter we take $x$ (and we remove $x$ from the graph), or we don't take $x$ and instead take all its neighbours (and we remove $x$ and all its neighbours from the graph). We can recognise the Fibonacci sequence which gives us our time complexity.
+Observe that given a subset $X \subseteq V$, we can check in polynomial time if $|X| \leq k$ and if $X$ is a vertex cover of $G$. Thus, we can trivially answer the question in time $\O(2^n \cdot n^{\O(1)})$, where $n = |V|$, by testing every subset $X \subseteq V$. This complexity can be improved to $\O(\varphi^n \cdot n^{O(1)})$, where $\varphi \approx 1.618$ is the golden ratio, by observing two things: firstly, we can consider that every vertex has at least one neighbour, or we can remove it from the graph without changing the best vertex cover; secondly, for every vertex $x$, if $x$ is not in the vertex cover of $G$, then every neighbour of $x$ needs to be in the vertex cover. These observations lead to the following recurrence for the number of operations needed to compute the smallest vertex cover on a graph with $n$ vertices: $T(n) \leq T(n - 1) + T(n - 2)$; choose $x \in V$, and either include $x$ (removing $x$ from the graph), or exclude $x$ and include all its neighbours (removing $x$ and all its neighbours from the graph). This recurrence is similar to the Fibonacci sequence, which gives us our time complexity.
 
 \medskip
 
-But can we refine our algorithm by introducing a parameter? Let's start with the integer $k$ given in the input. Observe that in the recursion tree given in the previous paragraph, we take at least one vertex at each step to include it in the vertex cover. Since the vertex cover cannot exceed $k$, it implies that the depth of the recursion tree cannot exceed $k$. Therefore, we have a $\O(2^k \cdot n^{\O(1)})$ algorithm for \prob{VertexCover}, parameterized by $k$. Note that this algorithm places \prob{VertexCover} parameterized by $k$ in \CC{FPT} with $f(k) = 2^k$.
+But can we refine our algorithm by introducing a parameter? Let us start with the integer $k$ given in the input. Observe that in the recursion tree given in the previous paragraph, we take at least one vertex at each step to include it in the vertex cover. Since the vertex cover cannot exceed $k$, it implies that the depth of the recursion tree cannot exceed $k$. Therefore, we have a $\O(2^k \cdot n^{\O(1)})$ algorithm for \prob{VertexCover}, parameterized by $k$. Note that this algorithm places \prob{VertexCover} parameterized by $k$ in \CC{FPT} with $f(k) = 2^k$.
 
-While we will not go into the details of the techniques used, it is known that \prob{VertexCover} can be solved in time $\O(1.2738^k + n\cdot k)$ using kernelization and branching techniques \cite{chen2006improved}, which completely outperforms the $\O(\varphi^n \cdot n^{\O(1)})$ algorithm since $k \leq n$.
+While we will not go into the details of the techniques used, it is known that \prob{VertexCover} can be solved in time $\O(1.2738^k + n\cdot k)$ using kernelization and branching techniques \cite{chen2006improved}, which completely outperforms the $\O(\varphi^n \cdot n^{\O(1)})$ time algorithm since $k \leq n$.
 
 \medskip
 
-Let's explore another parameter: the \textit{treewidth} of $G$. We will define more precisely the treewidth of a graph in the next Section, but for now, you can think of it as a measure of how similar the graph is to a tree. It is known that \prob{VertexCover} can be solved in time $\O(2^{\tw}\cdot\tw^{\O(1)}\cdot n)$, where $\tw$ denotes the treewidth of $G$, using dynamic programming techniques \cite[Corollary~7.6]{cygan2015parameterized}. Interestingly, it is also known that even though the dynamic programming techniques used in \cite[Corollary~7.6]{cygan2015parameterized} are one of the most basic approaches in parameterized techniques, we cannot expect a better algorithm for \prob{VertexCover} parameterized by \tw{} unless the \textit{Strong Exponential Time Hypothesis} (SETH) fails \cite{lokshtanov2011known}. In other words, for every $\varepsilon > 0$, we do not expect any algorithm in time $\O((2-\varepsilon)^\tw \cdot n^{\O(1)})$ or it would imply that SETH is wrong.
+Let us explore another parameter: the \textit{treewidth} of $G$. We will define more precisely the treewidth of a graph in the next Section, but for now, you can think of it as a measure of how similar the graph is to a tree. It is known that \prob{VertexCover} can be solved in time $\O(2^{\tw}\cdot\tw^{\O(1)}\cdot n)$, where $\tw$ denotes the treewidth of $G$, using dynamic programming techniques \cite[Corollary~7.6]{cygan2015parameterized}. Interestingly, it is also known that even though the dynamic programming techniques used in \cite[Corollary~7.6]{cygan2015parameterized} are one of the most basic approaches in parameterized techniques, we cannot expect a better algorithm for \prob{VertexCover} parameterized by \tw{} unless the \textit{Strong Exponential Time Hypothesis} (SETH) fails \cite{lokshtanov2011known}. In other words, for every $\varepsilon > 0$, we do not expect any algorithm in time $\O((2-\varepsilon)^\tw \cdot n^{\O(1)})$ or it would imply that SETH does not hold. Recall that SETH is a conjecture which states that for every $\varepsilon > 0$, there exists no algorithm for \prob{SAT} running in time $\O((2 - \varepsilon)^n\cdot n^{\O(1)})$.
 
 This lower bound on treewidth raises interesting questions: given that $\tw{} \leq n$ and there exists an algorithm with time complexity $\O(\varphi^n \cdot n^{\O(1)})$ but no algorithm with $\O((2 - \varepsilon)^\tw  \cdot n^{\O(1)})$, is there an intermediate parameter $p$ such that $\tw \leq p \leq n$ for which we can find an algorithm with time complexity $\O((2 - \varepsilon)^p \cdot n^{\O(1)})$ for any $\varepsilon > 0$?  Conversely, is there a parameter $p$ within the same range where it is impossible to achieve such an algorithm under SETH?
 
 \medskip
 
-Setting aside our example on \prob{VertexCover}, similar questions arise for many other \NP-hard problems. For several of these problems, we have a known dynamic programming approach parameterized by treewidth (see \reftheorem{theorem:treewidth-algo}). However, this approach is often tight, and under the SETH, we cannot expect a significantly faster algorithm (see \reftheorem{theorem:treewidth-bound}). Recall that the $\O^\star$ notation suppresses polynomial factors. \todo{find citations for the algorithms in \reftheorem{theorem:treewidth-algo}}
+Setting aside our example on \prob{VertexCover}, similar questions arise for many other \NP-hard problems. For several of these problems, we have a known dynamic programming approach parameterized by treewidth (see \reftheorem{theorem:treewidth-algo}). However, this approach is often tight, and under the SETH, we cannot expect a significantly faster algorithm (see \reftheorem{theorem:treewidth-bound}). Recall that the $\O^\star$ notation suppresses polynomial factors.
 
-\begin{theorem}
+\begin{theorem}[\cite{lokshtanov2011known}]
     \label{theorem:treewidth-algo}
     Let $G$ be a graph, and let $\tw$ be the treewidth of $G$. We know that:
     \begin{itemize}
-        \item \prob{IndependentSet} can be solved in time $\O^\star(2^{\tw})$ \cite{bjorklund2007fourier},
-        \item \prob{DominatingSet} can be solved in time $\O^\star(3^{\tw})$ [?],
-        \item \prob{MaxCut} can be solved in time $\O^\star(2^{\tw})$ [?],
-        \item \prob{OddCycleTransversal} can be solved in time $\O^\star(3^{\tw})$ [?],
-        \item \prob{$q$-Coloring} can be solved in time $\O^\star(q^{\tw})$ [?],
-        \item \prob{PartitionIntoTrinagles} can be solved in time $\O^\star(2^{\tw})$ [?].
+        \item \prob{IndependentSet} can be solved in time $\O^\star(2^{\tw})$,
+        \item \prob{DominatingSet} can be solved in time $\O^\star(3^{\tw})$,
+        % \item \prob{MaxCut} can be solved in time $\O^\star(2^{\tw})$,
+        \item \prob{OddCycleTransversal} can be solved in time $\O^\star(3^{\tw})$,
+        \item \prob{$q$-Coloring} can be solved in time $\O^\star(q^{\tw})$,
+        % \item \prob{PartitionIntoTrinagles} can be solved in time $\O^\star(2^{\tw})$.
     \end{itemize}
 \end{theorem}
 
@@ -55,21 +55,16 @@ Setting aside our example on \prob{VertexCover}, similar questions arise for man
     \begin{itemize}
         \item \prob{IndependentSet} can be solved in time $\O^\star((2-\varepsilon)^{\tw})$, or
         \item \prob{DominatingSet} can be solved in time $\O^\star((3-\varepsilon)^{\tw})$, or
-        \item \prob{MaxCut} can be solved in time $\O^\star((2-\varepsilon)^{\tw})$, or
+        % \item \prob{MaxCut} can be solved in time $\O^\star((2-\varepsilon)^{\tw})$, or
         \item \prob{OddCycleTransversal} can be solved in time $\O^\star((3-\varepsilon)^{\tw})$, or
         \item \prob{$q$-Coloring} can be solved in time $\O^\star((q-\varepsilon)^{\tw})$, or
-        \item \prob{PartitionIntoTrinagles} can be solved in time $\O^\star((2-\varepsilon)^{\tw})$.
+        % \item \prob{PartitionIntoTrinagles} can be solved in time $\O^\star((2-\varepsilon)^{\tw})$.
     \end{itemize}
     then the SETH fails.
 \end{theorem}
 
-
-\todo{Should we keep MaxCut, OddCycleTransversal and TrianglePacking in \reftheorem{theorem:treewidth-algo} and \reftheorem{theorem:treewidth-bound}, since we don't define or speak about these problems afterwards? I put them because the original theorem from Loshktanov et al. mentions all these problems. Moreover, it emphasizes the "many other \NP-hard problems" in the previous paragraph.}
-
-\todo{we need to define SETH, but where?}
-
 \todo{this last paragraph is not really clear, maybe try to be more precise on the goal}
 
-But for which parameters are these bounds still tight? Are the same parameters optimal for every problem? These questions were the focus during this internship, with the final goal beeing to refine our understanding of the lower and upper bounds for these problems.
+But for which parameters are these bounds still tight? Are the same parameters optimal for every problem? These questions were the focus during this internship, with the final goal being a refinement of our understanding of the lower and upper bounds for these problems.
 
 In this report, we will define several \NP-hard problems and establish a hierarchy of parameters, refining our knowledge for each problem and parameter. We will explore the lower bounds under SETH, the upper bounds, and what still remains to be understood.

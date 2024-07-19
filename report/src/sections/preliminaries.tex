@@ -1,7 +1,7 @@
 \section{Preliminaries}
 \label{section:preliminaries}
 
-In this section, we will focus on the vocabulary used in this report, along with the first known results required for the next sections. Let's start with some notation that will be used throughout this report. For an integer $k$, by $[k]$ we denote $\{1, \dots, k\}$. For a graph $G$, by $V(G)$ we denote the vertices of $G$ and by $E(G)$ we denote the edges of $G$. If $X \subseteq V(G)$, then $G - X$ denotes the graph $G'$ obtained by removing every vertex in $X$ and every edge with an endpoint in $X$. Unless stated otherwise, $n$ always refers to $|V(G)|$, while $m$ refers to $|E(G)|$. 
+In this section, we will focus on the vocabulary used in this report, along with the first known results required for the next sections. Let us start with some notation that will be used throughout this report. For an integer $k$, by $[k]$ we denote $\{1, \dots, k\}$. For a graph $G$, by $V(G)$ we denote the vertices of $G$ and by $E(G)$ we denote the edges of $G$. If $X \subseteq V(G)$, then $G - X$ denotes the graph $G'$ obtained by removing every vertex in $X$ and every edge with an endpoint in $X$. Unless stated otherwise, $n$ always refers to $|V(G)|$, while $m$ refers to $|E(G)|$. 
 % For a set $X$, by $X = X_1 \uplus \dots \uplus X_m$ we denote a disjoint partition of $X$.
 %  (i.e. $X_1 \cup \dots \cup X_m = X$ and $X_i \cap X_j = \emptyset$ for every $1 \leq i < j \leq m$).
 
@@ -47,7 +47,7 @@ Here is a list of all \NP-hard problems we will discuss in this report:
 
 \subsection{Treewidth}
 
-In the introduction Section, we characterized the treewidth of a graph $G$ as a measure of its "tree-like" structure. Let's now formally define it. This parameter, initially introduced by N. Robertson and P. D. Seymour in their seminal work on graph minors \cite{robertson1986graph}, is formally defined using the concept of a \textit{tree decomposition}.
+In \refsec{section:introduction}, we characterized the treewidth of a graph $G$ as a measure of its "tree-like" structure. Let us now formally define it. This parameter, initially introduced by Robertson and Seymour in their seminal work on graph minors \cite{robertson1986graph}, is formally defined using the concept of a \textit{tree decomposition}.
 
 \begin{definition}[tree decomposition]
     A tree decomposition of a graph $G$ is a pair $(T, \{X_i\}_{i \in V(T)})$ where $T$ is a tree and $\{X_i\}_{i \in V(T)}$ is a collection of subsets of $V(G)$ (called \emph{bags}) such that:
@@ -63,7 +63,7 @@ In the introduction Section, we characterized the treewidth of a graph $G$ as a 
 \end{definition}
 
 \begin{definition}[treewidth]
-    The treewidth of a graph $G$, denoted $\tw(G)$, is the minimum width over all possible tree decompositions of $G$. Formally, $\tw(G) = \min_{(T, \{X_i\})}\max_{i \in V(T)} |X_i| - 1$. In other words, the treewidth of $G$ is the smallest integer $k$ such that $G$ has a tree decomposition where each bag contains at most $k+1$ vertices.
+    The treewidth of a graph $G$, denoted $\tw(G)$, is the minimum width over all possible tree decompositions of $G$. In other words, the treewidth of $G$ is the smallest integer $k$ such that $G$ has a tree decomposition where each bag contains at most $k+1$ vertices.
 \end{definition}
 
 Although the formal definition may not immediately convey the intuition behind this measure, we provide examples (see \reffigure{fig:treewidth-example}) to help illustrate how treewidth captures the tree-like structure of a graph.
@@ -72,11 +72,11 @@ Although the formal definition may not immediately convey the intuition behind t
 
 \subsection{A hierarchy of parameters}
 
-To establish a hierarchy of parameters, we first define how parameters can be compared. Formally, a parameter is a function $\pi$ that takes a graph as input and returns a number. We say that parameter $\pi_1 \lp \pi_2$ if there exists a constant $c$ such that for every graph $G$, $\pi_1(G) \leq \pi_2(G) + c$.
+To establish a hierarchy of parameters, we first define how parameters can be compared. Formally, a parameter is a function $\pi$ that takes a graph as input and returns a number. For a pair of parameters $\pi_1, \pi_2$, we write $\pi_1 \lp \pi_2$ if there exists a constant $c$ such that for every graph $G$, $\pi_1(G) \leq \pi_2(G) + c$.
 
-We will now define various parameters discussthated in this report , with an overview provided \reffigure{fig:hierarchy} illustrating how these parameters compare to each other. A portion of this hierarchy is derived from \cite{fellows2013towards}. We encourage interested readers to consult this paper for further exploration of additional parameters and their relationships.
+We will now define various parameters discussed in this report , with an overview provided in \reffigure{fig:hierarchy} illustrating how these parameters compare to each other. A portion of this hierarchy is derived from \cite{fellows2013towards}. We encourage interested readers to consult this paper for further exploration of additional parameters and their relationships.
 
-Each time we define a parameter, we will explain its comparability with others.
+Each time we define a parameter, we will compare it with others.
 
 \input{figures/hierarchy.tex}
 
@@ -90,47 +90,47 @@ We can immediately see why $\tw \lp \pw$. Indeed, a path is a specific type of t
 
 \subsubsection*{Treedepth}
 
-Another parameter that is somewhat similar to treewidth is the \textit{treedepth} of a graph $G$. This parameter was first introduced by J. Nešetril and P. Ossona de Mendez \cite{nevsetvril2006tree} and is formally defined using the concept of a \textit{treedepth decomposition}.
+Another parameter that is somewhat similar to treewidth is the \textit{treedepth} of a graph $G$. Various definitions exist in the literature for this parameter, and we adopt the definition provided by Ne{\v{s}}et{\v{r}}il and Ossona de Mendez \cite{nevsetvril2006tree}, which employs the concept of an \textit{elimination forest}.
 
-\begin{definition}[treedepth decomposition]
-    A treedepth decomposition of a graph $G$ is a pair $(F, f)$ where $F$ is a rooted forest and $f : V(G) \mapsto V(F)$ is a bijection that maps vertices of $G$ to vertices of the forest $F$. This mapping satisfies the property that if $\{u, v\} \in E(G)$ then either $f(u)$ is an ancestor of $f(v)$, or $f(v)$ is an ancestor of $f(u)$.
+\begin{definition}[elimination forest]
+    An elimination forest of a graph $G$ is a pair $(F, f)$ where $F$ is a rooted forest and $f : V(G) \mapsto V(F)$ is a bijection that maps vertices of $G$ to vertices of the forest $F$. This mapping satisfies the property that if $\{u, v\} \in E(G)$ then either $f(u)$ is an ancestor of $f(v)$, or $f(v)$ is an ancestor of $f(u)$.
 \end{definition}
 
-\begin{definition}[depth of a treedepth decomposition]
-    The depth of a treedepth decomposition $(F, f)$ is defined as the depth of $F$, which is the length of the longest path between the root and a leaf in any tree of $F$.
+\begin{definition}[depth of an elimination forest]
+    The depth of an elimination forest $(F, f)$ is defined as the depth of $F$, which is the length of the longest path between the root and a leaf in any tree of $F$.
 \end{definition}
 
 \begin{definition}[treedepth]
-    The treedepth of a graph $G$, denoted $\td(G)$, is defined as the minimum depth over all possible treedepth decompositions of $G$. Formally, $\td(G) = \min_{(F, f)} d(F)$, where $d(F)$ denotes the depth of the rooted forest $F$.
+    The treedepth of a graph $G$, denoted $\td(G)$, is defined as the minimum depth over all possible elimination forests of $G$. Formally, $\td(G) = \min_{(F, f)} d(F)$, where $d(F)$ denotes the depth of the rooted forest $F$.
 \end{definition}
 
-Some examples of treedepth decompositions are shown \reffigure{fig:treedepth-example}.
+Some examples of elimination forests are shown in \reffigure{fig:treedepth-example}.
 
 \input{figures/treedepth-example.tex}
 
 \medskip
 
-It is quite intuitive why $\pw \lp \td$. Indeed, given a treedepth decomposition of a graph $G$, we can create a bag for every branch of the treedepth decomposition. You can convince yourself that this forms a path decomposition of the graph, and we have $\pw(G) \leq \td(G)$. A pictorial intuition of this transformation is provided \reffigure{fig:treedepth-to-pathwidth}.
+It is quite intuitive why $\pw \lp \td$. Indeed, given an elimination forest of a graph $G$, we can create a bag for every branch of the elimination forest. One can convince oneself that this forms a path decomposition of the graph, and we have $\pw(G) \leq \td(G)$. A pictorial intuition of this transformation is provided in \reffigure{fig:treedepth-to-pathwidth}.
 
 \input{figures/treedepth-to-pathwidth.tex}
 
-\subsubsection*{$\pazocal{F} + kv$ graphs}
+\subsubsection*{$\F$-modulator}
 
-Let $\pazocal{F}$ be a class of graphs and $G$ a graph. We say that $G$ is a $\pazocal{F} + kv$ graph if there exists $X \subseteq V(G)$ such that $|X| \leq k$ and $G - X \in \pazocal{F}$. The subset $X$ is called a \textit{hub} and $k$ can be used as a parameter. In this report we will use some of these parameters:
+Let $\F$ be a class of graphs and $G$ a graph. We say that $X \subseteq V(G)$ is an $\F$-modulator of $G$ if $G - X \in \F$. The size of an $\F$-modulator can be used as a parameter. In this report, we will use some of these parameters for different choces of $\F$, most of them have their own specific names:
 
 \begin{itemize}
-    \item Let $\pazocal{F}$ be \prob{IndependentSet}, the class of all graphs without edges. Then $X$ is a \textit{vertex cover hub} of size $k$, and the parameter is denoted $\vc(G) = k$.
-    \item Let $\pazocal{F}$ be \prob{Bipartite}, the class of all graphs without odd cycles. Then $X$ is a \textit{odd cycle transversal hub} of size $k$, and the parameter is denoted $\oct(G) = k$.
-    \item Let $\pazocal{F}$ be \prob{Forest}, the class of all graphs without cycles. Then $X$ is a \textit{feedback vertex set hub} of size $k$, and the parameter is denoted $\fvs(G) = k$.
-    \item Let $\pazocal{F}$ be \prob{LinearForest}, the class of all graphs without cycles and where the maximum degree of a vertex is 2. Then $X$ is a \todo{find a better name} \textit{linear feedback vertex set hub} of size $k$, and the parameter is denoted $\lfvs(G) = k$.
-    \item Let $\pazocal{F}$ be \prob{$\sigma$-ConnectedComponent}, the class of all graphs without connected components of size more than $\sigma$. Then $X$ is a \textit{$\sigma$-hub} of size $k$, and the parameter is denoted $\shub(G) = k$.
+    \item Let $\F$ be \prob{IndependentSet}, the class of all graphs without edges. Then an $\F$-modulator is a \textit{vertex cover}, and the parameter is denoted $\vc$.
+    \item Let $\F$ be \prob{Bipartite}, the class of all graphs without odd cycles. Then an $\F$-modulator is an \textit{odd cycle transversal}, and the parameter is denoted $\oct$.
+    \item Let $\F$ be \prob{Forest}, the class of all graphs without cycles. Then an $\F$-modulator is a \textit{feedback vertex set}, and the parameter is denoted $\fvs$.
+    \item Let $\F$ be \prob{LinearForest}, the class of all graphs without cycles and where the maximum degree of a vertex is 2. Then an $\F$-modulator is a \textit{linear feedback vertex set}, and the parameter is denoted $\lfvs$.
+    \item Let $\F$ be \prob{$\sigma$-ConnectedComponent}, the class of all graphs without connected components of size more than $\sigma$. Then an $\F$-modulator is a \textit{$\sigma$-hub}, and the parameter is denoted $\shub$.
 \end{itemize}
 
 \medskip
 
-Additionally, we will consider a case for $\sigma$-hub: when the number of edges between each component and $X$ is bounded by a constant $\delta$, then we say that $X$ is a \textit{$(\sigma, \delta)$-hub} of size $k$, and the parameter is denoted $\sdhub(G) = k$.
+Additionally, we will consider a case for $\sigma$-hub: when the number of edges between each component and a $\sigma$-hub is bounded by a constant $\delta$, we say that the hub is a \textit{$(\sigma, \delta)$-hub}, and the parameter is denoted $\sdhub$.
 
-Examples illustrating each of these parameters can be seen \reffigure{fig:fkv-graph-example}.
+Examples illustrating each of these parameters can be seen in \reffigure{fig:fkv-graph-example}.
 
 \input{figures/fkv-graph-example.tex}
 
@@ -141,7 +141,7 @@ $$\prob{IndependentSet} \subseteq \prob{$2$-ConnectedComponent} \subseteq \prob{
 
 The first inclusion is due to the fact that if $\sigma \leq \mu$, then $\sigma\prob{-ConnectedComponent} \subseteq \mu\prob{-ConnectedComponent}$. Moreover, \prob{IndependentSet} is the same class as \prob{$1$-ConnectedComponent}, since a graph without edges consists of disconnected components with only one vertex each and vice versa.
 
-Now, if $\pazocal{F}_1 \subseteq \pazocal{F}_2$ and $X$ is a hub such that $G - X \in \pazocal{F}_1$, then $X$ is also a hub such that $G - X \in \pazocal{F}_2$. This explains why $\oct \lp \fvs \lp \lfvs \lp \shub[2] \lp \vc$. Following the same logic, a $\sdhub$ is obviously also a $\shub$, which explains why $\shub \lp \sdhub$. Finally $\vc \lp n$ is quite ovious: a vertex cover of a graph cannot have more vertices than the graph itself.
+Now, if $\F_1 \subseteq \F_2$ and $X$ is an $\F_1$-modulator, then $X$ is also an $\F_2$-modulator. This explains why $\oct \lp \fvs \lp \lfvs \lp \shub[2] \lp \vc$. Following the same logic, a $\sdhub$ is obviously also a $\shub$, which explains why $\shub \lp \sdhub$. Finally $\vc \lp n$ is quite ovious: a vertex cover of a graph cannot have more vertices than the graph itself.
 
 \medskip
 
@@ -149,29 +149,29 @@ We still need to establish that $\td \lp \shub$, $\tw \lp \fvs$ and $\pw \lp \lf
 
 \medskip
 
-Let $G$ be a graph with a $\shub$ $X$ of size $k$. The treedepth of $X$ is at most $k$ since we can arrange the vertices of $X$ in a linear fashion, forming a trivial treedepth decomposition (see \reffigure{fig:shub-to-treedepth}). Removing $X$ leaves connected components of size at most $\sigma$, each having treedepth at most $\sigma$. Attaching the treedepth decomposition of each component to the last vertex of the treedepth decomposition of $X$ results in a valid treedepth decomposition for $G$ since the connected components have no common edges. This results in a total depth at most $k + \sigma$. Therefore, $\td(G) \leq \shub(G) + \sigma$, leading to $\td \lp \shub$ since $\sigma$ is a constant.
+Let $G$ be a graph with a $\shub$ $X$ of size $k$. The treedepth of $X$ is at most $k$ since we can arrange the vertices of $X$ in a linear fashion, forming a trivial elimination forest (see \reffigure{fig:shub-to-treedepth}). Removing $X$ leaves connected components of size at most $\sigma$, each having treedepth at most $\sigma$. Attaching the elimination forest of each component to the last vertex of the elimination forest of $X$ results in a valid elimination forest for $G$ since the connected components have no common edges. This results in a total depth at most $k + \sigma$. Therefore, $\td(G) \leq \shub(G) + \sigma$, leading to $\td \lp \shub$ since $\sigma$ is a constant.
 
 \input{figures/shub-to-treedepth.tex}
 
 \medskip
 
-To show that $\tw \lp \fvs$, consider a feedback vertex set (\fvs) hub $X$ of a graph $G$. Removing $X$ from $G$ results in a forest, and the treewidth of a forest is 1. Thus, we can construct a tree decomposition $T$ for this forest, where each bag has size at most 2. Extend $T$ to $G$ by adding $X$ to each bag results in a tree decomposition $T'$ of $G$ where each bag has size at most $|X| + 2$. Therefore $\tw(G) \leq |X| + 1 = \fvs(G) + 1$, demonstrating that $\tw \lp \fvs$.
+To show that $\tw \lp \fvs$, consider a feedback vertex set (\fvs) $X$ of a graph $G$. Removing $X$ from $G$ results in a forest, and the treewidth of a forest is 1. Thus, we can construct a tree decomposition $T$ for this forest, where each bag has size at most 2. Extend $T$ to $G$ by adding $X$ to each bag results in a tree decomposition $T'$ of $G$ where each bag has size at most $|X| + 2$. Therefore $\tw(G) \leq |X| + 1 = \fvs(G) + 1$, demonstrating that $\tw \lp \fvs$.
 
 \medskip
 
-Observing that removing a linear feedback vertex set (\lfvs) hub from a graph $G$ leaves a forest of path and leads to the same conclusion for $\pw \lp \lfvs$.
+Observing that removing a linear feedback vertex set (\lfvs) from a graph $G$ leaves a forest of path and leads to the same conclusion for $\pw \lp \lfvs$.
 
 \subsubsection*{Certificates}
 
 When designing an algorithm parameterized by a specific parameter, it is crucial to assume that an appropriate \textit{certificate} to this parameter is provided with the input. For instance, when developing an algorithm parameterized by treewidth, we expect a tree decomposition to be provided with the input.
 
-Similarly, for pathwidth, a path decomposition serves as the certificate; for treedepth, it is a treedepth decomposition; and for $\pazocal{F} + kv$ graphs, it is a hub $X$ of size at most $k$.
+Similarly, for pathwidth, a path decomposition serves as the certificate; for treedepth, it is an elimination forest; and for graphs with a small $\F$-modulator, it is an $\F$-modulator of size at most $k$.
 
 Therefore, to establish a robust hierarchy of parameters, it is essential that given a upper parameter and its corresponding certificate, we can polynomially construct a certificate for the lower parameter. Fortunately, based on the proofs we've discussed thus far, this polynomial construction of certificates follows naturally.
 
 \medskip
 
-A brief note on $\pazocal{F} + kv$ graphs: when a hub is given, it may not necessarily have the smallest possible size. For instance, a vertex cover hub doesn't lead directly to a polynomial-time algorithm for solving the \prob{VertexCover} problem because there might exist a better vertex cover.
+A brief note on graphs with a small $\F$-modulator: when an $\F$-modulator is given, it may not necessarily have the smallest possible size. For instance, if $X$ is a vertex cover of a graph $G$, this does not directly lead to a polynomial-time algorithm for solving the \prob{VertexCover} problem for $G$ because there might exist a smaller vertex cover.
 
 \subsection{Bounds under SETH}
 
@@ -186,7 +186,7 @@ Let $\Pi$ be a problem and $\pi$ a parameter. By $\Pi/\pi$, we denote the proble
     This observation directly follows from our definition of the hierarchy. Suppose you have a certificate for $\pi_2(G)$, then you can polynomially construct a certificate for $\pi_1(G)$ of same size up to a constant $c$. Thus, we can use the algorithm for $\Pi/\pi_1$, which leads to a time complexity $\O^\star(n^{\O(1)} + q^{\pi_2 + c}) = \O^\star(q^{\pi_2})$, as the $\O^\star$ notation removes polynomial factors. 
 \end{proof}
 
-For example, suppose you have an algorithm for $\prob{VertexCover}/\fvs$ in $\O^\star(1.9^\fvs)$, since a $\lfvs$-hub is also a $\fvs$-hub, then you can use the same algorithm for $\prob{VertexCover}/\lfvs$, giving you an $\O^\star(1.9^\lfvs)$ time algorithm.
+For example, suppose you have an algorithm for $\prob{VertexCover}/\fvs$ in $\O^\star(1.9^\fvs)$, since a $\lfvs$ is also a $\fvs$, then you can use the same algorithm for $\prob{VertexCover}/\lfvs$, giving you an $\O^\star(1.9^\lfvs)$ time algorithm.
 
 \begin{observation}
     \label{obs:lower_bound}
@@ -199,13 +199,13 @@ For example, suppose you have an algorithm for $\prob{VertexCover}/\fvs$ in $\O^
 
 \medskip
 
-These two observations will help you to understand the state of the art described \reffigure{fig:state-of-the-art}.
+These two observations will help you to understand the state of the art described in \reffigure{fig:state-of-the-art}.
 
 \subsubsection*{State of the art}
 
 \input{figures/state-of-the-art.tex}
 
-Everything described in this section is illustrated \reffigure{fig:state-of-the-art}.
+Everything described in this section is illustrated in \reffigure{fig:state-of-the-art}.
 
 \medskip
 
@@ -213,7 +213,7 @@ First, note that \prob{VertexCover} and \prob{IndependentSet} are inherently the
 
 \medskip
 
-\reftheorem{theorem:treewidth-bound} already states the lower bounds parameterized by treewidth for all the problems discussed here. Actually, in this paper, Loshktanov et al. proved the lower bounds under pathwidth \cite{lokshtanov2011known}.
+\reftheorem{theorem:treewidth-bound} already states the lower bounds parameterized by treewidth for all the problems discussed here. Actually, Loshktanov et al. proved the lower bounds under pathwidth \cite{lokshtanov2011known}.
 
 In 2024, Esmer et al. introduces the notion of $\sdhub$ \cite{esmer2024fundamental}. In their paper, they wrote about this parameter: "[$\sdhub$ reached] the arguably most restricted setting in which the lower bounds hold". This message was derived from the following theorems:
 
@@ -253,20 +253,20 @@ While \reftheorem{theorem:sdhub-upperbounds} directly provides an algorithm for 
 \end{corollary}
 
 \begin{proof}
-    Let's prove this for $\prob{IndependentSet}$; the proof for $\prob{OddCycleTransversal}$ and \prob{$q$-Coloring} is analogous.
+    Let us prove this for $\prob{IndependentSet}$; the proof for $\prob{OddCycleTransversal}$ and \prob{$q$-Coloring} is analogous.
 
-    Suppose there exists an $\varepsilon$ such that there is an algorithm solving $\prob{IndependentSet}/\td$ in time $\O^\star((2 - \varepsilon)^\td)$. Take $\sigma$ and $\delta$ given for this $\varepsilon$ by \reftheorem{theorem:sdhub-lowerbounds}. Given a $\sdhub$ of size $p$, we can transform it into a treedepth decomposition of depth $p + \sigma$ as described in the previous section (see \reffigure{fig:shub-to-treedepth}). By applying the algorithm for $\prob{IndependentSet}/\td$, we get a time complexity of $\O^\star((2 - \varepsilon)^{p + \sigma}) = \O^\star((2 - \varepsilon)^p)$. By \reftheorem{theorem:sdhub-lowerbounds}, SETH fails.
+    Suppose there exists an $\varepsilon$ such that there is an algorithm solving $\prob{IndependentSet}/\td$ in time $\O^\star((2 - \varepsilon)^\td)$. Take $\sigma$ and $\delta$ given for this $\varepsilon$ by \reftheorem{theorem:sdhub-lowerbounds}. Given a $\sdhub$ of size $p$, we can transform it into an elimination forest of depth $p + \sigma$ as described in the previous section (see \reffigure{fig:shub-to-treedepth}). By applying the algorithm for $\prob{IndependentSet}/\td$, we get a time complexity of $\O^\star((2 - \varepsilon)^{p + \sigma}) = \O^\star((2 - \varepsilon)^p)$. By \reftheorem{theorem:sdhub-lowerbounds}, SETH fails.
 \end{proof}
 
-Note that Esmer et al. did not establish the same bounds for $\prob{DominatingSet}\sdhub$, leaving this as an open problem.
+Note that Esmer et al. did not establish the same bounds for $\prob{DominatingSet}/\sdhub$, leaving this as an open problem.
 
 \medskip
 
-$\prob{IndependentSet}/\vc$ is a well studied algorithm and can run in ??\todo{find a bound and a citation here}.
+$\prob{IndependentSet}/\vc$ is a well-studied algorithm. An example of an algorithm for $\prob{VertexCover}/\vc$ (which directly gives an algorithm for $\prob{IndependentSet}/\vc$) is proposed in \cite[Theorem 3.2]{cygan2015parameterized} and runs in time $\O^\star(1.4656^\vc)$.
 
 \medskip
 
-\prob{DominatingSet} is already \NP-hard on bipartite graphs. Thus, finding an algorithm for $\prob{DominatingSet}/\oct$  with running time $\O^\star((3-\varepsilon)^\oct)$ is highly improbable unless $\P = \NP$, which is a stronger conjecture than SETH. Moreover, an algorithm for $\prob{DominatingSet}/\vc$ can run in $\O^\star(2^\vc)$; we will discuss this \refsec{section:domset-vc}.
+\prob{DominatingSet} is already \NP-hard on bipartite graphs. Thus, finding an algorithm for $\prob{DominatingSet}/\oct$  with running time $\O^\star((3-\varepsilon)^\oct)$ is highly improbable unless $\P = \NP$, which is a stronger conjecture than SETH. Moreover, an algorithm for $\prob{DominatingSet}/\vc$ can run in $\O^\star(2^\vc)$; we will discuss this in \refsec{section:domset-vc}.
 
 \medskip
 
@@ -274,18 +274,18 @@ A few years after the work by Loshkatnov et al., Jaffke and Jansen extended it a
 
 \medskip
 
-Finally, an algorithm for $\prob{OddCycleTransversal}/\oct$ was proposed by Narayanaswamy et al. \cite{narayanaswamy2012lp}, who developed an algorithm based on a branching guided by linear programming that runs in time $\O^\star(2.68^\oct)$. This was later improved by Lokshtanov et al. \cite{lokshtanov2012subexponential} to $\O^\star(2.32^\oct)$. 
+Finally, an algorithm for $\prob{OddCycleTransversal}/\oct$ was proposed by Loshkatnov et al. \cite{lokshtanov2012subexponential}, who developed an algorithm based on a branching guided by linear programming that runs in time $\O^\star(2.32^\oct)$. 
 
 \subsubsection*{Our result}
 
 \todo{there are probably too many sections}
 
-The goal of this internship was to find new upper and lower bounds under SETH. While the main focus was initially on \prob{DominatinSet}, we didn't achieved new interesting results for this problem. However, we developed an algorithm for $\prob{DominatingSet}/\sdhub[2, 2]$ running in time $\O^\star(2^p)$, given a $\sdhub[2,2]$ of size $p$. This algorithm solves a somewhat useless problem but demonstrates our methodology. More details on this algorithm are discussed \refsec{section:domset-22hub}.
+The goal of this internship was to find new upper and lower bounds under SETH. While the main focus was initially on \prob{DominatingSet}, we didn't achieve new interesting results for this problem. However, we developed an algorithm for $\prob{DominatingSet}/\sdhub[2, 2]$ running in time $\O^\star(2^p)$, given a $\sdhub[2,2]$ of size $p$. This algorithm solves a somewhat useless problem but demonstrates our methodology. More details on this algorithm are discussed in \refsec{section:domset-22hub}.
 
 \medskip
 
-We found interesting results for $\prob{IndependentSet}/\oct$ and proposed an algorithm with a running time $\O^\star((\sqrt{2.32})^\oct)$ (see \refsec{section:indset-oct}). While the bound for $\prob{IndependentSet}/\td$ was already clear by \refcorollary{corollary:td-lowerbounds}, we found an alternative proof showing this lower bound, which is presented \refsec{section:indset-td}. Additionally, we completed the hierarchy bounds for \prob{IndependentSet} by showing that for every $\sigma$, there exists an $\varepsilon$ such that $\prob{IndependentSet}/\shub$ can be solved in $\O^\star((2- \varepsilon)^p)$ given a $\shub$ of size $p$. This algorithm is detailed \refsec{section:indset-shub}.
+We found interesting results for $\prob{IndependentSet}/\oct$ and proposed an algorithm with a running time $\O^\star(1.53^\oct)$ (see \refsec{section:indset-oct}). While the bound for $\prob{IndependentSet}/\td$ was already known by \refcorollary{corollary:td-lowerbounds}, we found an alternative proof showing this lower bound, which is presented in \refsec{section:indset-td}. Additionally, we completed the hierarchy bounds for \prob{IndependentSet} by showing that for every $\sigma$, there exists an $\varepsilon$ such that $\prob{IndependentSet}/\shub$ can be solved in $\O^\star((2- \varepsilon)^p)$ given a $\shub$ of size $p$. This algorithm is detailed in \refsec{section:indset-shub}.
 
 \medskip
 
-To further complete the hierarchy bounds for \prob{$q$-Coloring}, we extended the work of Esmer et al. to show that for every $\sigma$, there exists an $\varepsilon$ for which there is an algorithm solving \prob{$q$-Coloring} in time $\O^\star((q-\varepsilon)^p)$ given a $\shub$ of size $p$. This algorithm is detailed \refsec{section:qcol-shub}.
+To further complete the hierarchy bounds for \prob{$q$-Coloring}, we extended the work of Esmer et al. to show that for every $\sigma$, there exists an $\varepsilon$ for which there is an algorithm solving \prob{$q$-Coloring} in time $\O^\star((q-\varepsilon)^p)$ given a $\shub$ of size $p$. This algorithm is detailed in \refsec{section:qcol-shub}.
