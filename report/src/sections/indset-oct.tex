@@ -1,2 +1,35 @@
 \section{Faster algorithm for \prob{IndependentSet}/\oct}
 \label{section:indset-oct}
+
+In this section, we present an algorithm to find the largest vertex cover of a graph $G$, given an odd cycle transversal $X$ for $G$ of size $l$. This algorithm runs in time $\O^\star(1.53^l)$. As discussed in \refsec{section:preliminaries}, \prob{VertexCover} and \prob{IndependentSet} are equivalent problems, so our algorithm also establishes the same bound for $\prob{IndependentSet}/\oct$.
+
+\medskip
+
+We begin by recalling the integer program for \prob{VertexCover} for a graph $G = (V, E)$:
+\begin{align*}
+    &\min \sum_{v \in V} x_v\\
+    \text{s.t.}\;\; & x_u + x_v \geq 1 &&\text{for every } \{u,v\} \in E\\
+    & x_v \in \{0,1\} &&\text{for every } v \in V
+\end{align*}
+    
+It is well known that integer linear programming (ILP) is $\NP$-hard. However, by relaxing the constraint $x_v \in \{0, 1\}$ to $x_v \in [0; 1]$, we optain a version of the program that can be solved in polynomial time using the interior-point methods \cite{karmarkar1984new}. Let $\LP$ denote the optimal value of this relaxed version, while $\vc$ denotes the optimal value of the integer version.
+
+\medskip
+
+Our algorithm relies on two important properties:
+\begin{enumerate}
+    \item There is an algorithm for \prob{VertexCover} that runs in time $\O^\star(2.32^{\vc - \LP})$ \cite{lokshtanov2014faster}.
+    \item The relaxed version of \prob{VertexCover} exhibits the \textit{half-integrality} property, meaning each vertex value in the optimal solution is 0, 1 or $\frac{1}{2}$. Moreover, if $V = V_0 \uplus V_{\frac{1}{2}} \uplus V_1$, where $V_i$ contains all vertices with value $i$ in the optimal solution, we can simplify the integral \prob{VertexCover} problem by including $V_1$ in the solution and discarding $V_0$, leaving us only with $G[V_{\frac{1}{2}}] = G - (V_0 \uplus V_1)$ \cite{nemhauser1975vertex}.
+\end{enumerate}
+
+\begin{theorem}
+    Let $G$ be a graph, and let $X$ be an odd cycle transversal of size $|X| = l$. There exists an algorithm that computes $\prob{VertexCover}/\oct$ in running time $\O^\star(1.53^l)$.
+\end{theorem}
+
+\begin{proof}
+    Our algorithm proceeds as follows: first, we compute the optimal solution for the relaxed version of \prob{VertexCover} for $G$ in polynomial time. Then, we remove every vertex with value of 0 or 1 from $G$. We denote the remaining graph as $G'$ and the remaining odd cycle transversal as $X'$. Let $n' = |G'|$ and $l' = |X'|$. Note that $X'$ is still an odd cycle transversal for $G'$, and $l' \leq l$.
+
+    By the half-integrality property, we know that the value of $\LP(G') = \frac{n'}{2}$. Additionally, we already know a good vertex cover for $G'$. Recall that $G' - X'$ is bipartite since $X'$ is an odd cycle transversal of $G'$. Let $B_1$ and $B_2$ be the two independent sets of $G' - X'$. Without loss of generality, assume $|B_1| \leq |B_2|$. Since $B_2$ is an independent set, $B_1$ is a vertex cover for $G' - X'$. Thus, $X' \uplus B_1$ is a vertex cover for $G'$. Since $|B_1| \leq |B_2|$, then $|B_1| \leq \frac{|G' - X'|}{2} = \frac{n' - l'}{2}$. It follows that $|B_1 \uplus X'| = |B_1| + |X'| \leq \frac{n' - l'}{2} + l' = \frac{n' + l'}{2}$. Therefore, $\vc(G) \leq \frac{n' + l'}{2}$.
+
+    Now, we can use the algorithm with time complexity $\O^\star(2.32^{\vc - \LP})$ to solve the problem. This yields an algorithm with time complexity $\O^\star(2.32^{\frac{n' + l'}{2} - \frac{n'}{2}}) = \O^\star(2.32^{\frac{l'}{2}}) = \O^\star(2.32^{\frac{l}{2}}) = \O^\star(1.53^l)$.
+\end{proof}

@@ -7,9 +7,9 @@ Recall that the depth of the three different components of the elimination fores
 \begin{align*}
     \td(G) &\leq tp + (p+1)\binom{p}{p/2} + \O(\log(t\binom{p}{p/2}))\\
     &= tp + \O(\log(t)) + f_1(p) & \text{for some function $f_1$}\\
-    &= tp + O(\log \left\lceil\frac{n}{\left\lfloor\log\binom{p}{p/2}\right\rfloor}\right\rceil) + f_1(p) & \text{by definition of $t$}\\
-    &= tp + O(\log n) - \O(\log\binom{p}{p/2}) + f_1(p) & \text{$\lfloor\cdot\rfloor$ and $\lceil\cdot\rceil$ disappear in $\O$}\\
-    &= tp + O(\log n) + f(p) & \text{for some function $f$}
+    &= tp + \O(\log \left\lceil\frac{n}{\left\lfloor\log\binom{p}{p/2}\right\rfloor}\right\rceil) + f_1(p) & \text{by definition of $t$}\\
+    &= tp + \O(\log n) - \O(\log\binom{p}{p/2}) + f_1(p) & \text{$\lfloor\cdot\rfloor$ and $\lceil\cdot\rceil$ disappear in $\O$}\\
+    &= tp + \O(\log n) + f(p) & \text{for some function $f$}
 \end{align*}
 which concludes the proof.
 
@@ -31,3 +31,43 @@ We have defined $\lambda > 0$ such that $(2-\varepsilon)^{1 + \lambda} \leq (2 -
 \end{align*}
 
 which concludes the proof.
+
+\subsection*{Algorithm for \reftheorem{theorem:domset-22-alltypes}}
+
+We slighty improve \refalgo{algo:domset-22-1} thanks to the remarks discussed in \refsec{section:domset-22hub}. $\Phi$ is still computed only for legs of type 1. The changes between \refalgo{algo:domset-22-1} and \refalgo{algo:domset-22-2} are colored in red and described below.
+
+\begin{algorithm}
+    \KwData{$G = (V, E)$, $X$ a $\sdhub[2.2]$ of $G$}
+    \KwResult{$\D$ a dominating set of minimum size for $G$}
+    \tcc{$T$ corresponds to the vertices taken in $X$ in the best dominating set for legs of types 5, 6, 7, and 8. $M$ is the set of vertices in $X$ dominated by $T$.}
+    {\color{red}$T, M \gets$ remove legs of types 5, 6, 7, and 8\;}
+    Compute $\Phi$\;
+    $\D \gets V$\;
+    \ForEach{$A \subseteq X$}{
+        \If{for all $L_i$ {\color{red}of type 1} we have $|\{x_i, y_i\} \cap A| \neq 1$}{
+            \If{{\color{red}for all $L_i$ of type 3 we have $\{x_i, y_i\} \cap A \neq \{x_i\}$}}{
+                \If{{\color{red}$T \subseteq X$}}{
+                    $L \gets \bigcup_{|\{x_i, y_i\} \cap X| = 2 {\color{red}\land L_i \text{ is of type 1}}}L_i$\;
+                    {\color{red}$S \gets \{u_i\ |\ |\{x_i, y_i\} \cap X| = 0 \land L_i \text{ is of types 2, 3 or 4}\}$\;}
+                    $W \gets$ vertices dominated by $A$ in $X \backslash A$\;
+                    {\color{red}$B \gets$ vertices dominated by $S$ in $X \backslash A$\;}
+                    $Y \gets X \backslash (A \cup W \cup {\color{red}M \cup B})$\;
+                    $D \gets (\Phi(Y, m) \backslash L) \cup A \cup {\color{red}S}$\;
+                    \If{$|D|\leq |\D|$}{
+                        $\D \gets D$\;
+                    }
+                }
+            }
+        }
+    }
+    \caption{$\prob{DominatingSet}/\sdhub[2,2]$ that handles all types of legs}
+    \label{algo:domset-22-2}
+\end{algorithm}
+
+\begin{itemize}
+    \item Changes in lines 1, 7, and 12 ensure that legs of types 5, 6, 7, and 8 are handled: we need $T$ inside $X$ and there is no need to dominate $M$ since it is already dominated.
+
+    \item Changes in lines 9, 11, 12, and 13 ensure that legs of type 2, 3, and 4 are handled. We need to take $u_i$ for all of them which have no neighbour in $A$. Moreover, we do not need to dominate $B$ since it is already dominated by these $u_i$.
+    
+    \item Finally, the change in line 6 ensures there is no leg of type 3 with $x_i \in A$ and $y_i \notin A$, as we know there is a dominating set of minimum size for $G$ without this kind of configuration.
+\end{itemize}
