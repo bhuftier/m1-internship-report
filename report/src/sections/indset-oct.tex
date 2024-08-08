@@ -12,7 +12,7 @@ We begin by recalling the integer program for \prob{VertexCover} for a graph $G 
     & x_v \in \{0,1\} &&\text{for every } v \in V
 \end{align*}
     
-It is well known that integer linear programming (ILP) is $\NP$-hard. However, by relaxing the constraint $x_v \in \{0, 1\}$ to $x_v \in [0; 1]$, we optain a version of the program that can be solved in polynomial time using the interior-point methods \cite{karmarkar1984new}. Let $\LP$ denote the optimal value of this relaxed version, while $\vc$ denotes the optimal value of the integer version.
+It is well known that integer linear programming (ILP) is $\NP$-hard. However, by relaxing the constraint $x_v \in \{0, 1\}$ to $x_v \in [0; 1]$, we obtain a version of the program that can be solved in polynomial time using the \mbox{interior-point} methods \cite{karmarkar1984new}. Let $\LP$ denote the optimal value of this relaxed version, while $\vc$ denotes the optimal value of the integer version.
 
 \medskip
 
@@ -29,7 +29,7 @@ Our algorithm relies on two important properties:
 \begin{proof}
     Our algorithm proceeds as follows: first, we compute the optimal solution for the relaxed version of \prob{VertexCover} for $G$ in polynomial time. Then, we remove every vertex with value of 0 or 1 from $G$. We denote the remaining graph as $G'$ and the remaining odd cycle transversal as $X'$. Let $n' = |G'|$ and $l' = |X'|$. Note that $X'$ is still an odd cycle transversal for $G'$, and $l' \leq l$.
 
-    By the half-integrality property, we know that the value of $\LP(G') = \frac{n'}{2}$. Additionally, we already know a good vertex cover for $G'$. Recall that $G' - X'$ is bipartite since $X'$ is an odd cycle transversal of $G'$. Let $B_1$ and $B_2$ be the two independent sets of $G' - X'$. Without loss of generality, assume $|B_1| \leq |B_2|$. Since $B_2$ is an independent set, $B_1$ is a vertex cover for $G' - X'$. Thus, $X' \uplus B_1$ is a vertex cover for $G'$. Since $|B_1| \leq |B_2|$, then $|B_1| \leq \frac{|G' - X'|}{2} = \frac{n' - l'}{2}$. It follows that $|B_1 \uplus X'| = |B_1| + |X'| \leq \frac{n' - l'}{2} + l' = \frac{n' + l'}{2}$. Therefore, $\vc(G) \leq \frac{n' + l'}{2}$.
+    By the half-integrality property, we know that the value of $\LP(G') = \frac{n'}{2}$. Additionally, we already know a vertex cover for $G'$. Recall that $G' - X'$ is bipartite since $X'$ is an odd cycle transversal of $G'$. Let $B_1$ and $B_2$ be the two independent sets of $G' - X'$. Without loss of generality, assume $|B_1| \leq |B_2|$. Since $B_2$ is an independent set, $B_1$ is a vertex cover for $G' - X'$. Thus, $X' \uplus B_1$ is a vertex cover for $G'$. Since $|B_1| \leq |B_2|$, then $|B_1| \leq \frac{|G' - X'|}{2} = \frac{n' - l'}{2}$. It follows that $|B_1 \uplus X'| = |B_1| + |X'| \leq \frac{n' - l'}{2} + l' = \frac{n' + l'}{2}$. Therefore, $\vc(G) \leq \frac{n' + l'}{2}$.
 
     Now, we can use the algorithm with time complexity $\O^\star(2.32^{\vc - \LP})$ to solve the problem. This yields an algorithm with time complexity $\O^\star(2.32^{\frac{n' + l'}{2} - \frac{n'}{2}}) = \O^\star(2.32^{\frac{l'}{2}}) = \O^\star(2.32^{\frac{l}{2}}) = \O^\star(1.53^l)$.
 \end{proof}

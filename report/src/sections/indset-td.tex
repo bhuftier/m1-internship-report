@@ -24,7 +24,7 @@ Now, let us describe the construction of a \textit{group gadget} $G_i$, for a gi
     \item Introduce a set $I_i$ of $p$ independent vertices.
     \item For each subset $A \subseteq I_i$ containing exactly $\frac{p}{2}$ vertices, construct a corresponding group $A'$ consisting of $\frac{p}{2} + 1$ vertices. By $\bar{A}$, we denote $I_i - A$.
     \item Connect $A$ and $A'$ as a complete bipartite graph. This configuration ensures that if any vertex from $A$ is included in an independent set of $G_i$, then none of the vertices from $A'$ can be included, and vice versa.
-    \item Connect all $A'$ groups together in a clique manner. This setup ensures that if any vertex from one $A'$ group is included in an independent set of $G_i$, then no vertex can be included fro any other $A'$ group. By $Clique_i$, we denote the union of all $A'$.
+    \item Connect all $A'$ groups together in a clique manner. This setup ensures that if any vertex from one $A'$ group is included in an independent set of $G_i$, then no vertex can be included from any other $A'$ group. By $Clique_i$, we denote the union of all $A'$.
 \end{enumerate}
 
 \medskip
@@ -35,13 +35,13 @@ For each $1 \leq i \leq t$ and every assignment of variables of the group $V_i$,
 
 Now, let us describe the construction of a \textit{clause gadget} $C_j$, for a given clause $c_j$ of $\phi$, (see \reffigure{fig:indset-td-gadgets}):
 \begin{enumerate}
-    \item For each group variable $V_i$ and for every assignment of $V_i$ that satisfies $c_j$, let $A$ denote the associated set of vertices in the group gadget $G_i$. Create a vertex $x_j^A$ and connect it to every vertices of $A$.
-    \item Let $X$ denote the set of all $x_j^A$ vertices created for clause $c_j$. Initially, assign each vertex in $X$ a depth of 1. Construct the gadget $C_j$ through the following steps until $X$ contains only one vertex:
+    \item For each group variable $V_i$ and for every assignment of $V_i$ that satisfies $c_j$, let $A$ denote the associated set of vertices in the group gadget $G_i$. Create a vertex $x_j^A$ and connect it to every vertex of $A$.
+    \item Let $X$ denote the set of all $x_j^A$ vertices created for the clause $c_j$. Each vertex is labelled by an integer, corresponding to its "depth" in the construction. Initially, each vertex in $X$ is of depth 1. Construct the gadget $C_j$ through the following steps until $X$ contains only one vertex:
     \begin{itemize}
-        \item Remove the two vertices from $X$ with the smallest depth $x_1$ (depth $d_1$) and $x_2$ (depth $d_2$).
+        \item Remove the two vertices from $X$ with the smallest depth, $x_1$ (depth $d_1$) and $x_2$ (depth $d_2$).
         \item Introduce a new vertex $y$ and form a triangle connecting $y$, $x_1$ and $x_2$.
         \item Introduce a new vertex $z$ and connect $y$ to $z$.
-        \item Add $z$ to $X$ and assign it a depth of $\max(d_1, d_2) + 1$. 
+        \item Add $z$ to $X$ and set the depth of $z$ to be $\max(d_1, d_2) + 1$. 
     \end{itemize}
 \end{enumerate}
 
@@ -57,13 +57,13 @@ This ends the construction of $G$.
 \begin{proof}
     Suppose $\I$ an independent set of max size of $G_i$.
     \begin{itemize}
-        \item \textbf{Case 1:} There is at least one vertex $x \in \I \cap Clique_i$. Let $A'$ be the group containing $x$. By construction, $x$ is connected to all vertices in $Clique_i - A'$. Moreover, $x$ is also connected to every vertex in $A \subseteq I$ associated with $A'$. The only possible vertices remaining are those from $A'$ and $\bar{A}$, which forms an independent set. Thus, by maximality of $\I$, we know $\I = A \cup \bar{A}$.
+        \item \textbf{Case 1:} There is at least one vertex $x \in \I \cap Clique_i$. Let $A'$ be the group containing $x$. By construction, $x$ is connected to all vertices in $Clique_i - A'$. Moreover, $x$ is also connected to every vertex in $A \subseteq I$ associated with $A'$. The only possible vertices remaining are those from $A'$ and $\bar{A}$, and these form an independent set. Thus, by maximality of $\I$, we know $\I = A \cup \bar{A}$.
         \item \textbf{Case 2:} $\I \cap Clique_i = \emptyset$. In this case, only the vertices of $I_i$ remain, and there are only $p$ vertices in $I_i$. Thus $\I$ cannot be larger than $p$ vertices.
     \end{itemize}
 
     \medskip
 
-    Therefore, the largest independent set in $G_i$ has size $p+1$, and each such independent set consists of $\bar{A} \cup A'$ for som $A \subseteq I$.
+    Therefore, the largest independent set in $G_i$ has size $p+1$, and each such independent set consists of $\bar{A} \cup A'$ for some $A \subseteq I$.
 \end{proof}
 
 \begin{lemma}
@@ -79,7 +79,7 @@ This ends the construction of $G$.
         \begin{itemize}
             \item Mark a triangle has \textit{good} if at least one of its top vertices ($x_1$ or $x_2$) is in $\I$.
             \item For $\I$ to be of size $\alpha_j$, the bottom vertex must be in $\I$, which forces the triangle directly above it to be good.
-            \item Assume the vertex in $\I$ from the triangle directly above the bottom vertex is the upper left one. This forces the triangle above it to be good, and so on, up to the top most triangles. Note that in this case, the triangle above the upper right vertex doesn't need to be good.
+            \item Assume without loss of generality the vertex in $\I$ from the triangle directly above the bottom vertex is the upper left one. This forces the triangle above it to be good, and so on, up to the top most triangles. Note that in this case, the triangle above the upper right vertex doesn't need to be good.
             \item At least one top triangle must be good, meaning at least one $x_j^A \in \I$.
         \end{itemize}
         
@@ -135,7 +135,7 @@ This ends the construction of $G$.
 
 \begin{lemma}
     \label{lemma:indset-sat-graph-td}
-    The treedepth of $G$ is at most $tp + \O(\log n) + f(p)$ for $f$ some function depending on $p$.
+    The treedepth of $G$ is at most $tp + \O(\log n) + f(p)$ for some function $f$.
 \end{lemma}
 
 \begin{proof}
@@ -162,7 +162,7 @@ Now we are ready to prove \reftheorem{theorem:indset-td-lowerbound}.
 \begin{proof}
     (of \reftheorem{theorem:indset-td-lowerbound}). Suppose $\prob{IndependentSet}/\td$ can be solved in $\O^\star((2-\varepsilon)^\td)$. We fix $\lambda > 0$ such that $(2 - \varepsilon)^{1 + \lambda} \leq 2 - \frac{\varepsilon}{2}$; note that such a $\lambda$ always exists and depends only on $\varepsilon$. Next, we choose $p \geq 2$ such that $p/(p - \frac{1}{2} + \frac{1}{2}\log(\pi p)) \leq 1 + \lambda$. This is feasible since the limit to infinity of the left part is 1. Moreover $p$ only depends on $\varepsilon$. 
     
-    Given an instance of \prob{SAT}, we construct an instance of $\prob{IndependentSet}$ using the above construction and the chosen value of $p$. Then we solve the $\prob{IndependentSet}$ instance using the $\O^\star((2 - \varepsilon)^\td)$ time algorithm. Corectness is ensured by \reflemma{lemma:indset-sat-graph-equiv}. \reflemma{lemma:indset-sat-graph-td} yields that the total time taken is upper bounded by: $$\O^\star((2-\varepsilon)^{tp + \O(\log n) + f(p)}) = \O^\star((2-\varepsilon)^{tp}) \leq \O^\star((2-\frac{\varepsilon}{2})^{n})$$ due to our choice of $p$. To see the full computation, please refer to \refappendix{appendix:boring-proofs}. By saying $\delta = \frac{\varepsilon}{2}$, we have proven \reftheorem{theorem:indset-td-lowerbound}.
+    Given an instance of \prob{SAT}, we construct an instance of $\prob{IndependentSet}$ using the above construction and the chosen value of $p$. Then we solve the $\prob{IndependentSet}$ instance using the $\O^\star((2 - \varepsilon)^\td)$ time algorithm. Correctness is ensured by \reflemma{lemma:indset-sat-graph-equiv}. \reflemma{lemma:indset-sat-graph-td} yields that the total time taken is upper bounded by: $$\O^\star((2-\varepsilon)^{tp + \O(\log n) + f(p)}) = \O^\star((2-\varepsilon)^{tp}) \leq \O^\star((2-\frac{\varepsilon}{2})^{n})$$ due to our choice of $p$. To see the full computation, please refer to \refappendix{appendix:boring-proofs}. By setting $\delta = \frac{\varepsilon}{2}$, we have proven \reftheorem{theorem:indset-td-lowerbound}.
 \end{proof}
 
-Therefore, no such algorithm exists for $\prob{IndependentSet}/\td$ or the SETH fails.
+Therefore, no such algorithm exists for $\prob{IndependentSet}/\td$ unless the SETH fails.
