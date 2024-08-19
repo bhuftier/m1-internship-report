@@ -3,7 +3,7 @@
 
 \subsection*{Complete proof for \reflemma{lemma:indset-sat-graph-td}}
 
-Recall that the depth of the three different components of the elimination forest depicted \reffigure{fig:indset-elimination-forest} are: $tp$ for the trunk, $(p+1)\binom{p}{p/2}$ for the $Clique_i$, and $\O(\log(t\binom{p}{p/2}))$ for the clause gadgets $C_j$. The total treedepth of $G$ is:
+Recall that the depth of the three different components of the elimination forest depicted \reffigure{fig:indset-elimination-forest} are: $tp$ for the "trunk", $(p+1)\binom{p}{p/2}$ for the $Clique_i$, and $\O(\log(t\binom{p}{p/2}))$ for the clause gadgets $C_j$. The total treedepth of $G$ is:
 \begin{align*}
     \td(G) &\leq tp + (p+1)\binom{p}{p/2} + \O(\log(t\binom{p}{p/2}))\\
     &= tp + \O(\log(t)) + f_1(p) & \text{for some function $f_1$}\\

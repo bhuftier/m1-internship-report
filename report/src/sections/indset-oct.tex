@@ -1,7 +1,7 @@
-\section{Faster algorithm for \prob{IndependentSet}/\oct}
+\subsection{Faster algorithm for \prob{IndependentSet}/\oct}
 \label{section:indset-oct}
 
-In this section, we present an algorithm to find the largest vertex cover of a graph $G$, given an odd cycle transversal $X$ for $G$ of size $l$. This algorithm runs in time $\O^\star(1.53^l)$. As discussed in \refsec{section:preliminaries}, \prob{VertexCover} and \prob{IndependentSet} are equivalent problems, so our algorithm also establishes the same bound for $\prob{IndependentSet}/\oct$.
+In this section, we present an algorithm to find the largest vertex cover of a graph $G$, given an odd cycle transversal $X$ for $G$. This algorithm runs in time $\O^\star(1.53^\oct)$. As discussed in \refsec{section:preliminaries}, \prob{VertexCover} and \prob{IndependentSet} are equivalent problems, so our algorithm also establishes the same bound for $\prob{IndependentSet}/\oct$.
 
 \medskip
 
@@ -23,13 +23,14 @@ Our algorithm relies on two important properties:
 \end{enumerate}
 
 \begin{theorem}
-    Let $G$ be a graph, and let $X$ be an odd cycle transversal of size $|X| = l$. There exists an algorithm that computes $\prob{VertexCover}/\oct$ in running time $\O^\star(1.53^l)$.
+    \label{theorem:indeset-oct}
+    Let $G$ be a graph, and let $X$ be an odd cycle transversal of $G$. There exists an algorithm that computes a solution to $\prob{VertexCover}/\oct$ in time $\O^\star(1.53^\oct)$.
 \end{theorem}
 
 \begin{proof}
-    Our algorithm proceeds as follows: first, we compute the optimal solution for the relaxed version of \prob{VertexCover} for $G$ in polynomial time. Then, we remove every vertex with value of 0 or 1 from $G$. We denote the remaining graph as $G'$ and the remaining odd cycle transversal as $X'$. Let $n' = |G'|$ and $l' = |X'|$. Note that $X'$ is still an odd cycle transversal for $G'$, and $l' \leq l$.
+    Our algorithm proceeds as follows: first, we compute the optimal solution for the relaxed version of \prob{VertexCover} for $G$ in polynomial time. Then, we remove every vertex with value of 0 or 1 from $G$. We denote the remaining graph as $G'$ and the remaining odd cycle transversal as $X'$. Let $n = |v(G)|$, $l = |X|$, $n' = |V(G')|$, and $l' = |X'|$. Note that $X'$ is still an odd cycle transversal for $G'$, and $l' \leq l$.
 
     By the half-integrality property, we know that the value of $\LP(G') = \frac{n'}{2}$. Additionally, we already know a vertex cover for $G'$. Recall that $G' - X'$ is bipartite since $X'$ is an odd cycle transversal of $G'$. Let $B_1$ and $B_2$ be the two independent sets of $G' - X'$. Without loss of generality, assume $|B_1| \leq |B_2|$. Since $B_2$ is an independent set, $B_1$ is a vertex cover for $G' - X'$. Thus, $X' \uplus B_1$ is a vertex cover for $G'$. Since $|B_1| \leq |B_2|$, then $|B_1| \leq \frac{|G' - X'|}{2} = \frac{n' - l'}{2}$. It follows that $|B_1 \uplus X'| = |B_1| + |X'| \leq \frac{n' - l'}{2} + l' = \frac{n' + l'}{2}$. Therefore, $\vc(G) \leq \frac{n' + l'}{2}$.
 
-    Now, we can use the algorithm with time complexity $\O^\star(2.32^{\vc - \LP})$ to solve the problem. This yields an algorithm with time complexity $\O^\star(2.32^{\frac{n' + l'}{2} - \frac{n'}{2}}) = \O^\star(2.32^{\frac{l'}{2}}) = \O^\star(2.32^{\frac{l}{2}}) = \O^\star(1.53^l)$.
+    Now, we can use the algorithm with time complexity $\O^\star(2.32^{\vc - \LP})$ to solve the problem. This yields an algorithm with time complexity $\O^\star(2.32^{\frac{n' + l'}{2} - \frac{n'}{2}}) = \O^\star(2.32^{\frac{l'}{2}}) = \O^\star(2.32^{\frac{l}{2}}) = \O^\star(1.53^l) = \O^\star(1.53^\oct)$.
 \end{proof}

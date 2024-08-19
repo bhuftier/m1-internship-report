@@ -1,5 +1,17 @@
 \begin{figure}
-    \includegraphics[width=\textwidth]{figures/treewidth-example.png}
-    \caption{Examples of treewidth. (a) A tree has treewidth 1. (b) A cycle has treewidth 2. (c) A graph with treewidth 2. For each example, the bags of a tree decomposition of the graph is shown at the top, and the tree of the corresponding tree decomposition is depicted at the bottom.}
+    \begin{subfigure}[b]{0.33\textwidth}
+        \adjincludegraphics[width=\textwidth,trim={0 0 {.67\width} 0},clip]{figures/treewidth-example.png}
+        \caption{A tree has treewidth 1.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.37\textwidth}
+        \adjincludegraphics[width=\textwidth,trim={{.33\width} 0 {.3\width} 0},clip]{figures/treewidth-example.png}
+        \caption{A cycle has treewidth 2.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \adjincludegraphics[width=\textwidth,trim={{.7\width} 0 0 0},clip]{figures/treewidth-example.png}
+        \caption{A graph with treewidth 2.}
+    \end{subfigure}
+
+    \caption{Examples of treewidth. For each example, the bags of a tree decomposition of the graph is shown at the top, and the tree of the corresponding tree decomposition is depicted at the bottom.}
     \label{fig:treewidth-example}
 \end{figure}

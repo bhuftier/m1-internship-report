@@ -1,4 +1,4 @@
-\section{No algorithm for \prob{IndependentSet}/\td{} under SETH}
+\subsection{No algorithm for \prob{IndependentSet}/\td{} under SETH}
 \label{section:indset-td}
 
 Esmer et al. \cite{esmer2024fundamental} demonstrated that there is no $\varepsilon > 0$ such that there is an algorithm running in time $\O^\star((2 - \varepsilon)^\td)$ for $\prob{IndependentSet}/\td$ without contradicting SETH, as shown in \refcorollary{corollary:td-lowerbounds}. However, we have discovered an alternative method to arrive at the same result, which we will describe in this section.
@@ -77,9 +77,9 @@ This ends the construction of $G$.
         \item \textbf{Case 1:} No $x_j^A \in \I$. According to the construction of $C_j$, if no $x_j^A$ is in $\I$, then the remaining of $C_j$ consists of $\alpha_j - 1$ cliques of size $2$ (see \reffigure{fig:indset-td-best}). Therefore, the maximum size of the independent set $\I$ would be $\alpha_j - 1$.
         \item \textbf{Case 2:} At least one $x_j^A \in \I$. In this scenario, $C_j$ can be partitioned into $\alpha_j$ cliques (see \reffigure{fig:indset-td-best}): $\alpha_j - 1$ triangles and one additional vertex at the bottom. To find the largest independent set, we proceed in a bottom-up manner:
         \begin{itemize}
-            \item Mark a triangle has \textit{good} if at least one of its top vertices ($x_1$ or $x_2$) is in $\I$.
+            \item Mark a triangle as \textit{good} if at least one of its top vertices ($x_1$ or $x_2$) is in $\I$.
             \item For $\I$ to be of size $\alpha_j$, the bottom vertex must be in $\I$, which forces the triangle directly above it to be good.
-            \item Assume without loss of generality the vertex in $\I$ from the triangle directly above the bottom vertex is the upper left one. This forces the triangle above it to be good, and so on, up to the top most triangles. Note that in this case, the triangle above the upper right vertex doesn't need to be good.
+            \item Assume without loss of generality that the vertex in $\I$ from the triangle directly above the bottom vertex is the upper left one. This forces the triangle above it to be good, and so on, up to the top most triangles. Note that in this case, the triangle above the upper right vertex doesn't need to be good.
             \item At least one top triangle must be good, meaning at least one $x_j^A \in \I$.
         \end{itemize}
         
@@ -106,7 +106,7 @@ This ends the construction of $G$.
         
         For each group $V_i$:
         \begin{itemize}
-            \item Consider the part $\pazocal{A}_i$ of the assignment $\pazocal{A}$ that contains the variable of $V_i$. Let $A_i$ be the set of vertices in the group gadget $G_i$ associated with $\pazocal{A}_i$.
+            \item Consider the part $\pazocal{A}_i$ of the assignment $\pazocal{A}$ that contains the variables of $V_i$. Let $A_i$ be the set of vertices in the group gadget $G_i$ associated with $\pazocal{A}_i$.
             \item According to \reflemma{lemma:group-gadget-indset}, we can take $\bar{A_i} \cup A_i'$ inside $\I$.
         \end{itemize}
         For each clause gadget $C_j$:
@@ -142,10 +142,10 @@ This ends the construction of $G$.
     We will construct an elimination forest $\F$ for the graph $G$. This elimination forest is depicted in \reffigure{fig:indset-elimination-forest}.
     
     \begin{itemize}
-        \item First, consider every vertex in each $I_i$ of all $G_i$ as forming a trunk of size $tp$ in $\F$.
+        \item First, consider every vertex in each $I_i$ of all $G_i$ as forming a path of size $tp$ in $\F$. This path can be seen as the "trunk" of $\F$.
         \item  Each $Clique_i$ in $G_i$ contains $(p+1)\binom{p}{p/2}$ vertices. Thus $G_i$ has a treedepth of at most $(p+1)\binom{p}{p/2}$.
         \item Moreover, these cliques only connect to vertices in $I_i$, so multiple $Clique_i$ does not increase the depth of $\F$.
-        \item Each clause gadget $C_j$ can be decomposed into a tree structure. The bottom vertex represent the root and each triangle in the gadget can be viewed as an internal node with three vertices.
+        \item Each clause gadget $C_j$ can be decomposed into a tree structure. The bottom vertex represents the root and each triangle in the gadget can be viewed as an internal node with three vertices.
         \item This forms a binary tree with $\alpha_j$ leaves, giving it a depth of $\lceil3\log{\alpha_j}\rceil$. Since $\alpha_j \leq t\binom{p}{p/2}$, the depth is $\O(\log(t\binom{p}{p/2}))$ for $C_j$.
         \item Because $C_j$ only connects to vertices in $I_i$, adding multiple clause gadgets does not increase the depth of $\F$.
     \end{itemize}
@@ -165,4 +165,4 @@ Now we are ready to prove \reftheorem{theorem:indset-td-lowerbound}.
     Given an instance of \prob{SAT}, we construct an instance of $\prob{IndependentSet}$ using the above construction and the chosen value of $p$. Then we solve the $\prob{IndependentSet}$ instance using the $\O^\star((2 - \varepsilon)^\td)$ time algorithm. Correctness is ensured by \reflemma{lemma:indset-sat-graph-equiv}. \reflemma{lemma:indset-sat-graph-td} yields that the total time taken is upper bounded by: $$\O^\star((2-\varepsilon)^{tp + \O(\log n) + f(p)}) = \O^\star((2-\varepsilon)^{tp}) \leq \O^\star((2-\frac{\varepsilon}{2})^{n})$$ due to our choice of $p$. To see the full computation, please refer to \refappendix{appendix:boring-proofs}. By setting $\delta = \frac{\varepsilon}{2}$, we have proven \reftheorem{theorem:indset-td-lowerbound}.
 \end{proof}
 
-Therefore, no such algorithm exists for $\prob{IndependentSet}/\td$ unless the SETH fails.
+Therefore, no such algorithm exists for $\prob{IndependentSet}/\td$ unless SETH fails.

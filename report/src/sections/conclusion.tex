@@ -1,0 +1,14 @@
+\section{Conclusion}
+\label{section:conclusion}
+
+In this report, we discussed new bounds for several known \NP-hard problems. We demonstrated how to improve upon the $\O^\star(3^p)$ algorithm for \prob{DominatingSet}, where $p$ is either the $\sdhub[2,2]$ or the vertex cover number ($\vc$). Specifically, we developed algorithms with running times of $\O^\star(2^{\sdhub[2,2]})$ and $\O^\star(2^\vc)$, respectively. In both cases, the space complexity is also exponential.
+
+For \prob{IndependentSet}, we proved that finding an algorithm parameterized by treedepth ($\td$) with a running time of $\O^\star((2 - \varepsilon)^\td)$ for any $\varepsilon > 0$ would imply that the Strong Exponential Time Hypothesis (SETH) is false. On the other hand, we proposed a new algorithm for \prob{IndependentSet} parameterized by odd cycle transversal ($\oct$), which runs in time $\O^\star(1.53^\oct)$.
+
+\medskip
+
+We also introduced two additional algorithms, not detailed in this report, which provide new upper bounds for \prob{IndependentSet} and \prob{$q$-Coloring} parameterized by $\shub$, further refining the current state of the art.
+
+\medskip
+
+One potential direction for future research could be to explore the possibility of finding an algorithm for \prob{DominatingSet} that runs in time $\O^\star((3-\varepsilon)^p)$ for any $\varepsilon > 0$. Although many researchers have attempted this, for many parameters $p$, we still lack a clear intuition about whether such an algorithm is feasible. Another possible direction would be to develop algorithms with polynomial space complexity for $\prob{DominatingSet}/\vc$ and $\prob{DominatingSet}/\sdhub[2,2]$.

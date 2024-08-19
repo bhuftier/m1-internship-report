@@ -1,6 +1,14 @@
 \begin{figure}
     \centering
-    \includegraphics[width=.6\textwidth]{figures/shub-to-treedepth.png}
+    \begin{subfigure}[b]{0.33\textwidth}
+        \adjincludegraphics[width=\textwidth,trim={0 0 {.45\width} 0},clip]{figures/shub-to-treedepth.png}
+        \caption{}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.27\textwidth}
+        \adjincludegraphics[width=\textwidth,trim={{.55\width} 0 0 0},clip]{figures/shub-to-treedepth.png}
+        \caption{}
+    \end{subfigure}
+    
     \caption{How to transform a $\shub$ $X$ into an elimination forest. (a) A $\shub$ of a graph (in red), and the connected components (in blue). (b) The elimination forest of depth $\leq |X| + \sigma$.}
     \label{fig:shub-to-treedepth}
 \end{figure}

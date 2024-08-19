@@ -1,4 +1,4 @@
-\section{Faster algorithm for \prob{DominatingSet}/$\sdhub[2,2]$}
+\subsection{Faster algorithm for \prob{DominatingSet}/$\sdhub[2,2]$}
 \label{section:domset-22hub}
 
 This section aims to present our current progress in finding bounds for \prob{DominatingSet}. In our effort to identify a parameter $p$ such that there exists an algorithm running in $\O^\star(3 - \varepsilon)^p$ time, we tried to extend the algorithm parameterized by $\vc$ (see \refsec{section:domset-vc}), since $\vc$ is equivalent to $\shub[1]$. While we did not succeed in developing an algorithm parameterezed by $\shub[2]$, we did find an improvement for $\prob{DominatingSet}/\sdhub[2,2]$, achieving an algorithm running in $\O^\star(2^{\sdhub[2,2]})$ time.
@@ -46,7 +46,7 @@ $$\Phi(A, i) = \text{ a dominating set of minimum size for $A \cup L_1 \cup \dot
 
 \begin{theorem}
     \label{theorem:domset-22-type1}
-    Let $G$ be a graph, and let $X$ be a $\sdhub[2,2]$ of $G$ of size $|X| = l$ where all legs are of type 1. There exists an algorithm that computes $\prob{DominatingSet}/\sdhub[2,2]$ in running time $\O^\star(2^l)$.
+    Let $G$ be a graph, and let $X$ be a $\sdhub[2,2]$ of $G$ of size $|X| = l$ where all legs are of type 1. There exists an algorithm that computes a solution of $\prob{DominatingSet}/\sdhub[2,2]$ in time $\O^\star(2^l)$.
 \end{theorem}
 
 \begin{proof}
@@ -112,7 +112,7 @@ In conclusion, we can focus only on legs of type 1. The solution with every type
 
 \begin{theorem}
     \label{theorem:domset-22-alltypes}
-    Let $G$ be a graph, and let $X$ be a $\sdhub[2,2]$ of $G$ size $|X| = l$. There exists an algorithm that computes $\prob{DominatingSet}/\sdhub[2,2]$ in running time $\O^\star(2^l)$.
+    Let $G$ be a graph, and let $X$ be a $\sdhub[2,2]$ of $G$ size $|X| = l$. There exists an algorithm that computes a solution to $\prob{DominatingSet}/\sdhub[2,2]$ in time $\O^\star(2^l)$.
 \end{theorem}
 
 \begin{proof}

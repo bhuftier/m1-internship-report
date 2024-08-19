@@ -1,7 +1,7 @@
-\section{Faster algorithm for \prob{DominatingSet}/\vc}
+\subsection{Faster algorithm for \prob{DominatingSet}/\vc}
 \label{section:domset-vc}
 
-A better algorithm than $\O^\star(3^\vc)$ for $\prob{DominatingSet}/\vc$ was known before this internship. However, we developed our own solution and will present our proof as an example of how we can achieve a better algorithm for such a problem and parameter. First of all, let us recall the \prob{SetCover} problem:
+A better algorithm than $\O^\star(3^\vc)$ for $\prob{DominatingSet}/\vc$ was known before this internship. However, we developed our own solution and will present our proof as an example of how we can achieve a better algorithm than $\O^\star(3^\vc)$ for \prob{DominatingSet}. First of all, let us recall the \prob{SetCover} problem:
 
 \begin{problem}
     \problemtitle{SetCover}
@@ -17,16 +17,16 @@ For $(U, \pazocal{G})$ an instance of \prob{SetCover}, and for $A \subseteq U$, 
 \end{lemma}
 
 \begin{proof}
-    Let us denotes $\phi(A)$ the size of the smallest set cover of $A$. We can compute $\phi(A)$ using the following dynamic programming approach:
+    Let us denote $\phi(A)$ the size of the smallest set cover of $A$. We can compute $\phi(A)$ using the following dynamic programming approach:
     \begin{align*}
         &\phi(\emptyset) = 0\\
-        &\phi(A) = \min\{1 + \phi(A \backslash S),\ S \in \pazocal{G} \land S \cap A \neq \emptyset\}
+        &\phi(B) = \min\{1 + \phi(B \backslash S),\ S \in \pazocal{G} \text{ and } S \cap B \neq \emptyset\} & \text{for every non empty } B \subseteq A
     \end{align*}
     
     To compute $\Phi(A)$, follow the same dynamic programming approach: $\Phi(\emptyset) = \emptyset$ and then track the current construction of a set cover of minimum size. We can demonstrate that $\Phi(A)$ is one of the smallest set covers of $A$ by induction:
     \begin{itemize}
         \item $\Phi(\emptyset)$ is obviously $\emptyset$.
-        \item Suppose $\F \subseteq \pazocal{G}$ is one of the smallest set covers of $A$. Choose $S \in \F$ and remove it from $A$. You obtain a strictly smaller set, since $S \cap A \neq \emptyset$, or $\F$ would not have been one of the smallest set covers of $A$. Observe that $\F \backslash \{S\}$ is a set cover of $A \backslash S$. By induction, $\Phi(A \backslash S)$ is one of the smallest set covers for $A \backslash S$. Thus, we have $|\F \backslash \{S\}| \geq |\Phi(A \backslash S)|$, leading to $|\F| \geq |\Phi(A \backslash S) \cup \{S\}|$. By minimality of $\F$, $\Phi(A \backslash S) \cup \{S\}$ is one of the smallest set covers of $A$. This set will be checked during the construction of $\Phi(A)$, which concludes that $\Phi(A)$ is one of the smallest set covers of $A$.
+        \item Suppose $\F \subseteq \pazocal{G}$ is one of the smallest set covers of $A$. Choose $S \in \F$ and remove it from $A$. We obtain a strictly smaller set, since $S \cap A \neq \emptyset$, or $\F$ would not have been one of the smallest set covers of $A$. Observe that $\F \backslash \{S\}$ is a set cover of $A \backslash S$. By induction, $\Phi(A \backslash S)$ is one of the smallest set covers for $A \backslash S$. Thus, we have $|\F \backslash \{S\}| \geq |\Phi(A \backslash S)|$, leading to $|\F| \geq |\Phi(A \backslash S) \cup \{S\}|$. By minimality of $\F$, $\Phi(A \backslash S) \cup \{S\}$ is one of the smallest set covers of $A$. This set will be checked during the construction of $\Phi(A)$, which concludes that $\Phi(A)$ is one of the smallest set covers of $A$.
     \end{itemize}
     
     Each computation takes time $\poly(|U|, |\pazocal{G}|)$, and there are $2^{|U|}$ different subsets $A$. This results in an overall running time of $\O^\star(2^{|U|})$.
@@ -36,7 +36,7 @@ For $(U, \pazocal{G})$ an instance of \prob{SetCover}, and for $A \subseteq U$, 
 
 \begin{theorem}
     \label{theorem:domset-vc}
-    Let $G$ be a graph, and let $X$ be a vertex cover of size $|X| = l$. There exists an algorithm that computes $\prob{DominatingSet}/\vc$ in running time $O^\star(2^l)$.
+    Let $G$ be a graph, and let $X$ be a vertex cover of $G$. There exists an algorithm that computes a solution to $\prob{DominatingSet}/\vc$ in time $O^\star(2^\vc)$.
 \end{theorem}
 
 \begin{proof}
@@ -53,9 +53,9 @@ For $(U, \pazocal{G})$ an instance of \prob{SetCover}, and for $A \subseteq U$, 
     \medskip
 
     We succeed in constructing $\D$ by assuming we knew $A = X \cap \D$. Thus, we can test every subset $A \subseteq X$, apply the previous construction to create a dominating set for each $A$, and select the smallest dominating set. Therefore, the size of $\D$ is given by
-    $$|\D| = \min_{A \subseteq X}\{|A| + |B| + \Phi(C)\}$$
+    $$|\D| = \min_{A \subseteq X}\{|A| + |B| + \phi(C)\}$$
 
-    Since there are exactly $2^{|X|}$ subsets of $X$, the total running time of this algorithm is $O^\star(2^{|X|}) = O^\star(2^l)$.
+    Since there are exactly $2^{|X|}$ subsets of $X$, the total running time of this algorithm is $O^\star(2^{|X|}) = O^\star(2^\vc)$.
 \end{proof}
 
-Notice that this algorithm requires exponential space to store $\Phi$. An interesting area of future work could be to determine if we can find an algorithm with time complexity $O^\star((3 - \varepsilon)^\vc)$ for $\prob{DominatingSet}/\vc$ that uses only polynomial space.
+Notice that this algorithm requires exponential space to store $\Phi$ since we compute $\Phi$ (which contains $2^{|X|}$ values) and we use it afterwards in the algorithm. An interesting area of future work could be to determine if we can find an algorithm with time complexity $O^\star((3 - \varepsilon)^\vc)$ for $\prob{DominatingSet}/\vc$ that uses only polynomial space.

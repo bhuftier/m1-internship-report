@@ -7,18 +7,18 @@ In this section, we focus on the vocabulary used in this report, along with the 
 
 \medskip
 
-Here is a list of all \NP-hard problems we will discuss in this report:
+In this report, the four following \NP-hard problems will be discussed:
 
 \begin{problem}
     \problemtitle{VertexCover}
     \probleminput{A graph $G = (V, E)$, an integer $k$}
-    \problemquestion{Does there exist a subset of vertices $X\subseteq V$ such that $|X| \leq k$ and $X$ is a \textit{vertex cover} of $G$, meaning every edge in $E$ has at least one endpoint in $X$?}
+    \problemquestion{Does there exist a subset of vertices $X\subseteq V$ such that $|X| \leq k$ and every edge in $E$ has at least one endpoint in $X$?}
 \end{problem}
 
 \begin{problem}
     \problemtitle{IndependentSet}
     \probleminput{A graph $G = (V, E)$, an integer $k$}
-    \problemquestion{Does there exist a subset of vertices $X \subseteq V$ such that $|X| \geq k$ and $X$ is an \textit{independent set} of $G$, meaning no two vertices in $X$ are adjacent?}
+    \problemquestion{Does there exist a subset of vertices $X \subseteq V$ such that $|X| \geq k$ and no vertices in $X$ are adjacent?}
 \end{problem}
 
 \begin{problem}
@@ -42,16 +42,16 @@ Here is a list of all \NP-hard problems we will discuss in this report:
 \begin{problem}
     \problemtitle{DominatingSet}
     \probleminput{A graph $G = (V, E)$, an integer $k$}
-    \problemquestion{Does there exist a subset of vertices $D \subseteq V$ such that $|D| \leq k$ and $D$ is a \textit{dominating set} of $G$, meaning every vertex in $V$ is either in $D$ or adjacent to a vertex in $D$?}
+    \problemquestion{Does there exist a subset of vertices $D \subseteq V$ such that $|D| \leq k$ and every vertex in $V$ is either in $D$ or adjacent to a vertex in $D$?}
 \end{problem}
 
 \subsection{Parameters}
 
-We will now define various graph parameters discussed in this report.
+In this section, we define the various graph parameters used throughout this report.
 
 \subsubsection*{Treewidth}
 
-In \refsec{section:introduction}, we gave an informal description of the treewidth of a graph $G$ as a measure of its "tree-like" structure. Let us now formally define it. This parameter, initially introduced by Robertson and Seymour in their seminal work on graph minors \cite{robertson1986graph}, can be defined using the concept of a \textit{tree decomposition}.
+In \refsec{section:introduction}, we gave an informal description of the treewidth of a graph $G$ as a measure of its "tree-like" structure. Let us now formally define it. This parameter can be defined using the concept of a \textit{tree decomposition}, concept initially introduced by Robertson and Seymour in their seminal work on graph minors \cite{robertson1986graph}.
 
 \begin{definition}[tree decomposition]
     A tree decomposition of a graph $G$ is a pair $(T, \{X_i\}_{i \in V(T)})$ where $T$ is a tree and $\{X_i\}_{i \in V(T)}$ is a collection of subsets of $V(G)$ (called \emph{bags}) such that:
@@ -67,7 +67,7 @@ In \refsec{section:introduction}, we gave an informal description of the treewid
 \end{definition}
 
 \begin{definition}[treewidth]
-    The treewidth of a graph $G$, denoted by $\tw(G)$, is the minimum width over all possible tree decompositions of $G$. In other words, the treewidth of $G$ is the smallest integer $k$ such that $G$ has a tree decomposition where each bag contains at most $k+1$ vertices.
+    The treewidth of a graph $G$ is the smallest integer $k$ such that $G$ has a tree decomposition where each bag contains at most $k+1$ vertices.
 \end{definition}
 
 Although the formal definition may not immediately convey the intuition behind this measure, we provide examples in \reffigure{fig:treewidth-example} to illustrate how treewidth captures the tree-like structure of a graph.
@@ -103,22 +103,24 @@ Some examples of elimination forests are shown in \reffigure{fig:treedepth-examp
 Let $\F$ be a class of graphs and $G$ be a graph. We say that $X \subseteq V(G)$ is an \emph{$\F$-modulator} of $G$ if $G - X \in \F$. The size of an $\F$-modulator can be used as a parameter. In this report, we will use some of these parameters for different choices of $\F$, most of them have their own specific names:
 
 \begin{itemize}
-    \item Let $\F$ be \prob{IndependentSet}, the class of all graphs without edges. Then an $\F$-modulator is a \textit{vertex cover}, and the corresponding parameter is denoted by $\vc$.
-    \item Let $\F$ be \prob{Bipartite}, the class of all graphs without odd cycles. Then an $\F$-modulator is an \textit{odd cycle transversal}, and the corresponding parameter is denoted by $\oct$.
-    \item Let $\F$ be \prob{Forest}, the class of all graphs without cycles. Then an $\F$-modulator is a \textit{feedback vertex set}, and the corresponding parameter is denoted by $\fvs$.
-    \item Let $\F$ be \prob{LinearForest}, the class of all graphs without cycles and where the maximum degree of a vertex is 2. Then an $\F$-modulator is a \textit{linear feedback vertex set}, and the corresponding parameter is denoted by $\lfvs$.
-    \item Let $\F$ be \prob{$\sigma$-ConnectedComponent}, the class of all graphs without connected components of size more than $\sigma$. Then an $\F$-modulator is a \textit{$\sigma$-hub}, and the corresponding parameter is denoted by $\shub$.
+    \item Let $\F$ be \graphclass{IndependentSet}, the class of all graphs without edges. Then an $\F$-modulator is a \textit{vertex cover}, and the corresponding parameter is denoted by $\vc$.
+    \item Let $\F$ be \graphclass{Bipartite}, the class of all graphs without odd cycles. Then an $\F$-modulator is an \textit{odd cycle transversal}, and the corresponding parameter is denoted by $\oct$.
+    \item Let $\F$ be \graphclass{Forest}, the class of all graphs without cycles. Then an $\F$-modulator is a \textit{feedback vertex set}, and the corresponding parameter is denoted by $\fvs$.
+    \item Let $\F$ be \graphclass{LinearForest}, the class of all graphs without cycles and where the maximum degree of a vertex is 2. Then an $\F$-modulator is a \textit{linear feedback vertex set}, and the corresponding parameter is denoted by $\lfvs$.
+    \item Let $\F$ be \graphclass{$\sigma$-ConnectedComponent}, the class of all graphs without connected components of size more than $\sigma$. Then an $\F$-modulator is a \textit{$\sigma$-hub}, and the corresponding parameter is denoted by $\shub$.
 \end{itemize}
 
 \medskip
 
-Additionally, we will consider a case for $\sigma$-hub: when the number of edges between each component and a $\sigma$-hub is bounded by a constant $\delta$, we say that the hub is a \textit{$(\sigma, \delta)$-hub}, and the parameter is denoted $\sdhub$ \cite{esmer2024fundamental}.
+We will consider an additional case for $\sigma$-hub: when the number of edges between each component and a $\sigma$-hub is bounded by a constant $\delta$, we say that the hub is a \textit{$(\sigma, \delta)$-hub}, and the parameter is denoted $\sdhub$ \cite{esmer2024fundamental}.
 
 Examples illustrating each of these parameters can be seen in \reffigure{fig:fkv-graph-example}.
 
 \input{figures/fkv-graph-example.tex}
 
 \subsection{A hierarchy of parameters}
+
+Some parameters are "stronger" than others in the sense that developing an algorithm based on them is more challenging because they provide more detailed information about the graph. For instance, finding an algorithm parameterized by pathwidth is generally easier than one parameterized by treewidth, since a path decomposition is a special case of a tree decomposition. Identifying correlations between these parameters is crucial, as it refines our understanding of which problems can be efficiently solved under specific parameters. This is why establishing a hierarchy of parameters is so important.
 
 To establish a hierarchy of parameters, we first define how parameters can be compared. Formally, a parameter is a function $\pi$ that takes a graph as input and returns a number. For a pair of parameters $\pi_1, \pi_2$, we write $\pi_1 \lp \pi_2$ if there exists a constant $c$ such that for every graph $G$, $\pi_1(G) \leq \pi_2(G) + c$.
 
@@ -138,12 +140,12 @@ It is quite intuitive why $\pw \lp \td$. Indeed, given an elimination forest of 
 
 \subsubsection*{Hierarchy of $\F$-modulators}
 
-Once again, it is quite intuitive why we have $\oct \lp \fvs \lp \lfvs \lp \shub[2] \lp \vc \lp n$. This is due to the fact that we have the following hierarchy of classes:
-$$\prob{IndependentSet} \subseteq \prob{$2$-ConnectedComponent} \subseteq \prob{LinearForest} \subseteq \prob{Forest} \subseteq \prob{Bipartite}$$
+For $\F$-modulators, we have $\oct \lp \fvs \lp \lfvs \lp \shub[2] \lp \vc \lp n$. This is due to the fact that we have the following hierarchy of classes:
+$$\graphclass{IndependentSet} \subseteq \graphclass{$2$-ConnectedComponent} \subseteq \graphclass{LinearForest} \subseteq \graphclass{Forest} \subseteq \graphclass{Bipartite}$$
 
-The first inclusion is due to the fact that if $\sigma \leq \mu$, then $\sigma\prob{-ConnectedComponent} \subseteq \mu\prob{-ConnectedComponent}$. Moreover, \prob{IndependentSet} is the same class as \prob{$1$-ConnectedComponent}, since a graph without edges consists of disconnected components with only one vertex each and vice versa.
+The first inclusion is due to the fact that if $\sigma \leq \mu$, then $\sigma\graphclass{-ConnectedComponent} \subseteq \mu\graphclass{-ConnectedComponent}$. Moreover, \graphclass{IndependentSet} is the same class as \graphclass{$1$-ConnectedComponent}, since a graph without edges consists of disconnected components with only one vertex each and vice versa.
 
-Now, if $\F_1 \subseteq \F_2$ and $X$ is an $\F_1$-modulator, then $X$ is also an $\F_2$-modulator. This explains why $\oct \lp \fvs \lp \lfvs \lp \shub[2] \lp \vc$. Following the same logic, a $\sdhub$ is obviously also a $\shub$, which explains why $\shub \lp \sdhub$. Finally $\vc \lp n$ is quite obvious: a vertex cover of a graph cannot have more vertices than the graph itself.
+Now, if $\F_1 \subseteq \F_2$ and $X$ is an $\F_1$-modulator, then $X$ is also an $\F_2$-modulator. This explains why $\oct \lp \fvs \lp \lfvs \lp \shub[2] \lp \vc$. Following the same logic, a $\sdhub$ is also a $\shub$, which explains why $\shub \lp \sdhub$. Finally $\vc \lp n$ is simple: a vertex cover of a graph cannot have more vertices than the graph itself.
 
 \subsubsection*{Treedepth $\lp \sdhub$}
 
@@ -181,10 +183,10 @@ Let $\Pi$ be a problem and $\pi$ a parameter. By $\Pi/\pi$, we denote the proble
 \end{observation}
 
 \begin{proof}
-    This observation directly follows from our definition of the relation $\lp$. Suppose you have a certificate for $\pi_2(G)$, then you can polynomially construct a certificate for $\pi_1(G)$ of same size up to a constant $c$. Thus, we can use the algorithm for $\Pi/\pi_1$, which leads to a time complexity $\O^\star(n^{\O(1)} + q^{\pi_2 + c}) = \O^\star(q^{\pi_2})$, as the $\O^\star$ notation hides polynomial factors. 
+    This observation directly follows from our definition of the relation $\lp$. Suppose we have a certificate for $\pi_2(G)$, then we can polynomially construct a certificate for $\pi_1(G)$ of same size up to a constant $c$. Thus, we can use the algorithm for $\Pi/\pi_1$, which leads to a time complexity $\O^\star(n^{\O(1)} + q^{\pi_2 + c}) = \O^\star(q^{\pi_2})$, as the $\O^\star$ notation hides polynomial factors. 
 \end{proof}
 
-For example, suppose you have an algorithm for $\prob{VertexCover}/\fvs$ in $\O^\star(1.9^\fvs)$, since a $\lfvs$ is also a $\fvs$, then you can use the same algorithm for $\prob{VertexCover}/\lfvs$, giving you an $\O^\star(1.9^\lfvs)$ time algorithm.
+For example, suppose we have an algorithm for $\prob{VertexCover}/\fvs$ in $\O^\star(1.9^\fvs)$, since a $\lfvs$ is also a $\fvs$, then we can use the same algorithm for $\prob{VertexCover}/\lfvs$, giving an $\O^\star(1.9^\lfvs)$ time algorithm.
 
 \begin{observation}
     \label{obs:lower_bound}
@@ -197,23 +199,23 @@ For example, suppose you have an algorithm for $\prob{VertexCover}/\fvs$ in $\O^
 
 \medskip
 
-These two observations will help you to understand the state of the art described in \reffigure{fig:state-of-the-art}.
+These two observations can help in understanding the state of the art illustrated in \reffigure{fig:state-of-the-art}.
 
-\subsubsection*{State-of-the-art}
+\subsubsection*{State of the art}
 
 \input{figures/state-of-the-art.tex}
 
-We now discuss the complexity of four problems (\prob{IndependentSet}, \prob{DominatingSet}, \prob{$q$-Coloring} and \prob{OddCycleTransversal}) through the prism of the hierarchy of parameters presented above. Everything described in this section is illustrated in \reffigure{fig:state-of-the-art}.
+We now discuss the complexity of the four problems presented in the introduction of \refsec{section:preliminaries} (\prob{IndependentSet}, \prob{DominatingSet}, \prob{$q$-Coloring} and \prob{OddCycleTransversal}) through the prism of the hierarchy of parameters presented above. Everything described in this section is illustrated in \reffigure{fig:state-of-the-art}.
 
 \medskip
 
-First, note that \prob{VertexCover} and \prob{IndependentSet} are inherently the same problem. Finding an algorithm (or proving that no algorithm exists) forWe can imme $\prob{VertexCover}/\pi$ for a parameter $\pi$ is equivalent to finding an algorithm (or proving that no algorithm exists) for $\prob{IndependentSet}/\pi$. This is because, for a graph $G$, the size of the maximum independent set and the size of the minimum vertex cover of $G$ sum to $n$, the number of vertices in $G$. Thus, answering the question "is there a \prob{VertexCover} of size $\leq k$?" can be rephrased as "is there no \prob{IndependentSet} of size $\geq n - k + 1$?".
+First, note that \prob{VertexCover} and \prob{IndependentSet} are inherently the same problem. Finding an algorithm (or proving that no algorithm exists) for $\prob{VertexCover}/\pi$ for a parameter $\pi$ is equivalent to finding an algorithm (or proving that no algorithm exists) for $\prob{IndependentSet}/\pi$. This is because, for a graph $G$, the size of the maximum independent set and the size of the minimum vertex cover of $G$ sum to $n$, the number of vertices in $G$. Thus, answering the question "is there a \prob{VertexCover} of size $\leq k$?" can be rephrased as "is there no \prob{IndependentSet} of size $\geq n - k + 1$?".
 
 \medskip
 
 \reftheorem{theorem:treewidth-bound} already states the lower bounds parameterized by treewidth for all the problems discussed here. Actually, Loshktanov et al. proved that these lower bounds hold even when replacing treewidth by pathwidth \cite{lokshtanov2011known}.
 
-In 2024, Esmer et al. introduces the notion of $\sdhub$ \cite{esmer2024fundamental}. In their paper, they wrote that $\sdhub$ reached "the arguably most restricted setting in which the lower bounds [of \cite{lokshtanov2011known}] hold". This message was derived from the following theorems:
+In 2024, Esmer et al. introduces the notion of $\sdhub$ \cite{esmer2024fundamental}. In their paper, they wrote that $\sdhub$ reached "the arguably most restricted setting in which the lower bounds [of \cite{lokshtanov2011known}] hold". This statement was derived from the following theorems:
 
 \begin{theorem}[\cite{esmer2024fundamental}]
     \label{theorem:sdhub-lowerbounds}
@@ -223,7 +225,7 @@ In 2024, Esmer et al. introduces the notion of $\sdhub$ \cite{esmer2024fundament
         \item $\prob{OddCycleTransversal}/\sdhub$ in time $\O^\star((3 - \varepsilon)^p)$, or
         \item $q\prob{-Coloring}/\sdhub$ in time $\O^\star((q - \varepsilon)^p)$,
     \end{itemize}
-    given a $\sdhub$ of size at most $p$, then the SETH fails.
+    given a $\sdhub$ of size at most $p$, then SETH fails.
 \end{theorem}
 
 \begin{theorem}[\cite{esmer2024fundamental}]
@@ -247,7 +249,7 @@ While \reftheorem{theorem:sdhub-upperbounds} directly provides an algorithm for 
         \item $\prob{OddCycleTransversal}/\td$ in time $\O^\star((3 - \varepsilon)^\td)$, or
         \item $q\prob{-Coloring}/\td$ in time $\O^\star((q - \varepsilon)^\td)$,
     \end{itemize}
-    then the SETH fails.
+    then SETH fails.
 \end{corollary}
 
 \begin{proof}
