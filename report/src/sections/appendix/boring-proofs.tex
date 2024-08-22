@@ -47,8 +47,8 @@ We slighty improve \refalgo{algo:domset-22-1} thanks to the remarks discussed in
         \If{for all $L_i$ {\color{red}of type 1} we have $|\{x_i, y_i\} \cap A| \neq 1$}{
             \If{{\color{red}for all $L_i$ of type 3 we have $\{x_i, y_i\} \cap A \neq \{x_i\}$}}{
                 \If{{\color{red}$T \subseteq X$}}{
-                    $L \gets \bigcup_{|\{x_i, y_i\} \cap X| = 2 {\color{red}\land L_i \text{ is of type 1}}}L_i$\;
-                    {\color{red}$S \gets \{u_i\ |\ |\{x_i, y_i\} \cap X| = 0 \land L_i \text{ is of types 2, 3 or 4}\}$\;}
+                    $L \gets \bigcup_{|\{x_i, y_i\} \cap X| = 2 {\color{red}\text{ and } L_i \text{ is of type 1}}}L_i$\;
+                    {\color{red}$S \gets \{u_i\ |\ |\{x_i, y_i\} \cap X| = 0 \text{ and } L_i \text{ is of types 2, 3 or 4}\}$\;}
                     $W \gets$ vertices dominated by $A$ in $X \backslash A$\;
                     {\color{red}$B \gets$ vertices dominated by $S$ in $X \backslash A$\;}
                     $Y \gets X \backslash (A \cup W \cup {\color{red}M \cup B})$\;
