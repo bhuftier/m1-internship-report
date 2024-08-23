@@ -1,0 +1,81 @@
+\begin{tikzpicture}
+    \tikzstyle{vertex} = [draw=black,fill=black,circle,inner sep=0pt,minimum size=3pt];
+    \tikzstyle{possible} = [fill=green,circle,inner sep=0pt,minimum size=10pt];
+    \tikzstyle{impossible} = [fill=red,circle,inner sep=0pt,minimum size=10pt];
+    \tikzstyle{new} = [fill=lime,circle,inner sep=0pt,minimum size=10pt];
+    \tikzstyle{result} = [draw=black,circle,dashed,thick,inner sep=0pt,minimum size=20pt];
+    \tikzstyle{edge} = [draw=black,thick];
+    \tikzstyle{possibleedge} = [draw=green,line width=5pt];
+    \tikzstyle{impossibleedge} = [draw=red,line width=5pt];
+    \tikzstyle{newedge} = [draw=lime,line width=5pt];
+
+    % This is an invisible rectangle which draw the picture to avoid nodes to move when appear/disappear.
+    \path (0, 0) -- (3.2, 0) -- (3.2, 5) -- (0, 5);
+
+    \coordinate (A) at (2, 4.6);
+    \coordinate (B) at (2, 3.8);
+    \coordinate (C) at (2, 3);
+    \coordinate (D) at (1, 1.7);
+    \coordinate (E) at (1, .7);
+    \coordinate (F) at (0, 0);
+    \coordinate (G) at (3.5, 3);
+    \coordinate (H) at (3, 2.5);
+    \coordinate (I) at (3, 1.5);
+    \coordinate (J) at (3, .5);
+    \coordinate (K) at (2, 0);
+
+    \node<3-> [style=possible] at (A) {};
+    \node<4-> [style=possible] at (B) {};
+    \node<7-> [style=possible] at (G) {};
+
+    \draw<4-> [style=possibleedge] (A) -- (B);
+
+    \node<6-> [style=impossible] at (I) {};
+    \node<5-> [style=impossible] at (J) {};
+    \node<5-> [style=impossible] at (K) {};
+
+    \draw<6-> [style=impossibleedge] (I) -- (J);
+    \draw<5-> [style=impossibleedge] (J) -- (K);
+
+    \node<8-> [style=new] at (C) {};
+    \node<8-> [style=new] at (D) {};
+    \node<8-> [style=new] at (E) {};
+    \node<8-> [style=new] at (F) {};
+    \node<9-> [style=new] at (H) {};
+
+    \draw<8-> [style=newedge] (B) -- (C);
+    \draw<8-> [style=newedge] (C) -- (D);
+    \draw<9-> [style=newedge] (C) -- (H);
+    \draw<8-> [style=newedge] (D) -- (E);
+    \draw<8-> [style=newedge] (E) -- (F);
+    \draw<9-> [style=newedge] (G) -- (H);
+
+    \node<8-> [style=result] at (F) {};
+    \node<9-> [style=result] at (H) {};
+    \node<10-> [style=result] at (I) {};
+
+    \node [style=vertex,label={[label distance=1pt]180:$n$}]        at (A) {};
+    \node [style=vertex,label={[label distance=1pt]180:\vc}]        at (B) {};
+    \node [style=vertex,label={[label distance=1pt]180:$\shub[2]$}] at (C) {};
+    \node [style=vertex,label={[label distance=1pt]170:\lfvs}]      at (D) {};
+    \node [style=vertex,label={[label distance=1pt]170:\fvs}]       at (E) {};
+    \node [style=vertex,label={[label distance=1pt]270:\oct}]       at (F) {};
+    \node [style=vertex,label={[label distance=1pt]90:$\sdhub$}]   at (G) {};
+    \node [style=vertex,label={[label distance=1pt]0:$\shub$}]    at (H) {};
+    \node [style=vertex,label={[label distance=1pt]0:\td}]        at (I) {};
+    \node [style=vertex,label={[label distance=1pt]0:\pw}]        at (J) {};
+    \node [style=vertex,label={[label distance=1pt]270:\tw}]        at (K) {};
+
+    \draw [style=edge] (A) -- (B);
+    \draw [style=edge] (B) -- (C);
+    \draw [style=edge] (C) -- (D);
+    \draw [style=edge] (C) -- (H);
+    \draw [style=edge] (D) -- (E);
+    \draw [style=edge] (D) -- (J);
+    \draw [style=edge] (E) -- (F);
+    \draw [style=edge] (E) -- (K);
+    \draw [style=edge] (G) -- (H);
+    \draw [style=edge] (H) -- (I);
+    \draw [style=edge] (I) -- (J);
+    \draw [style=edge] (J) -- (K);
+\end{tikzpicture}

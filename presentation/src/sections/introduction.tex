@@ -1,0 +1,80 @@
+\begin{frame}{\IS}
+    \begin{minipage}{0.5\textwidth}
+        \begin{alertblock}{\IS}
+            \textbf{Input:}
+            \begin{itemize}
+                \item<2-> A graph $G = (V, E)$,
+                \item<3-> An integer $k \in \N$.
+            \end{itemize}
+
+            \textbf{Output:}
+            
+            \onslide<4->{Yes if there is ${\color{red}X} \subseteq V$ s.t}
+            \begin{itemize}
+                \item<5-> $|X| \geq k$,
+                \item<6-> $G[X]$ has no edge.
+            \end{itemize}
+        \end{alertblock}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \input{figures/independent-set.tex}
+
+        \onslide<3->{$k = 2$}
+    \end{minipage}
+\end{frame}
+
+\begin{frame}{Parameterized complexity}
+    \begin{center}
+        $\IS$ is \NP-complete.
+    \end{center}
+
+    \vspace*{1cm}
+
+    \begin{itemize}
+        \item<2-> Algorithm in \only<2-4>{$\O(\varphi^n\cdot n^{\O(1)})$}\only<5->{${\color<5>{red}\O^\star}(\varphi^n)$} \qquad $\varphi \approx 1.618$
+        \item<3-> Algorithm in \only<2-4>{$\O(2^k\cdot n^{\O(1)})$}\only<5->{${\color<5>{red}\O^\star}(2^k)$}
+    \end{itemize}
+
+    \vspace*{1cm}
+
+    \onslide<4->{Interesting if $k$ is small.}
+
+    \onslide<6->{But what about other \textbf{parameters}?}
+\end{frame}
+
+\begin{frame}{Hierarchy of parameters}
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \input{figures/hierarchy.tex}
+    \end{minipage}
+    \begin{minipage}{0.47\textwidth}
+        \begin{itemize}
+            \item<3-> $\O^\star(\varphi^n)$
+            \item<4-> $\O^\star(1.4656^\vc)$
+            \item<5-> No $\O^\star((2 - \varepsilon)^\pw)$ (2011)
+            \item<6-> No $\O^\star((2 - \varepsilon)^\td)$ (2024)
+            \item<7-> $\exists. \varepsilon\ \O^\star((2 - \varepsilon)^{\sdhub})$ (2024)
+        \end{itemize}
+
+        \medskip
+
+        \begin{itemize}
+            \item<8-> \color{red} $\O^\star(1.53^\oct)$
+            \item<9-> \color{red} $\exists. \varepsilon\ \O^\star((2 - \varepsilon)^{\shub})$
+            \item<10-> \color{red} No $\O^\star((2 - \varepsilon)^\td)$
+        \end{itemize}
+    \end{minipage}
+
+    \medskip
+
+    \pause 
+
+    Given a parameter $p$, does it exists an algorithm for \IS\ in time $\O^\star((2-\varepsilon)^p)$ for any $\varepsilon > 0$?
+\end{frame}
+
+\begin{frame}{SETH}
+    \begin{alertblock}{SETH - Strong Exponential Time Hypothesis}
+        There exists no algorithm for SAT in $\O^\star((2-\varepsilon)^n)$
+    \end{alertblock}
+\end{frame}
