@@ -1,2 +1,47 @@
 \subsection{Faster algorithm for $q$\prob{-Coloring}/$\shub$}
 \label{section:qcol-shub}
+
+This section presents an algorithm for \prob{$q$-Coloring}/$\shub$. The proof is just an extension of the proof for \prob{$q$-Coloring}/$\sdhub$ proposed by Esmer et al. \cite{esmer2024fundamental}.
+
+\medskip
+
+In the proof, we used the \prob{List-$q$-Coloring} problem, which is the following problem:
+
+\begin{problem}
+    \problemtitle{List-$q$-Coloring}
+    \probleminput{A graph $G = (V, E)$, and a function $L : V \mapsto \pazocal{P}([q])$}
+    \problemquestion{Can the vertices of $G$ be colored with $q$ colors such that no two adjacent vertices share the same color and each color respect the lists represented by $L$. In other words, does there exist a function $f : V \mapsto [q]$ where $f(u) \neq f(v)$ for every edge $\{u,v\} \in E$ and $f(u) \in L(u)$ for every vertex $u \in G$?}
+\end{problem}
+
+We can see that \prob{$q$-Coloring} is a specific case of \prob{List-$q$-Coloring} where all the lists are equal to $[q]$. Therefore, finding an algorithm for \prob{List-$q$-Coloring} instantly gives us an algorithm for \prob{$q$-Coloring}.
+
+\medskip
+
+\begin{theorem}
+    For every $q \geq 3$ and every constant $\sigma \in \N$, there exists an $\varepsilon > 0$ with the follwing property: every instance $(G, L)$ of \prob{List-$q$-Coloring} with $n$ vertices, given with a $\shub$ of size $\ell$, can be solved in time $\O^\star((q-\varepsilon)^\ell)$.
+\end{theorem}
+
+\begin{proof}
+    \todo{the first paragraphs of this proof are just copy-pasted from Esmer et al. paper (Section 7.1)}
+
+    Let $X$ be a $\shub$ of $G$. If $X$ is a constant-size set, we can guess its coloring exhaustively, and then adjust the lists of the neighbours of vertices in $X$ as follows. If $x \in X$ is guessed to be colored with color $i$, then $i$ can be removed from lists of all vertices in the neighbourhood of $X$. After that we can safely remove $X$ from the graph, obtaining an equivalent instance, which can be solved in polynomial time as its every component is of constant size $\sigma$. Thus from now on assume that $|X| = \ell$ is sufficiently large.
+
+    \medskip
+
+    We first check if there is a vertex with an empty list; if so, we immediately reject the instance. Then we check whether there exists a component $A$ of $G - X$ with no neighbour in $X$. If such an $A$ exist, we solve the instance $G[A]$ of \prob{List-$q$-Coloring}: it can be done in constant time as $A \leq \sigma$. If it is a yes-instance, then we can proceed with the equivalent instance $G - A$; if it is a no-instance, then $(G, L)$ is a no-instance and we reject it.
+
+    \medskip
+
+    \todo{the new proof start here.}
+
+    Fix a constant $\delta = q \times \sigma$. Suppose that for all components $A$ of $G - X$, we have $|N(A)| \leq \delta$, where $N(A)$ denote the neighbourhood of $A$ in $X$. In this case, $X$ is also a $\sdhub$ and we can use the algorithm given by Esmer et al. \cite{esmer2024fundamental} to solve the problem in $\O^\star((q - \varepsilon)^\ell)$.
+
+    \medskip
+
+    Suppose now that there exists a component $A$ of $G - X$ such that $|N(A) > \delta$. Since $|A| \leq \sigma$, it implies that there exists $u \in A$ such that $N(u) > q$. Consider $U$ a set consisting of $q$ elements of $N(u)$. We know this is impossible that the coloring of $U$ use $q$ colors, or $u$ would not be colorable. Thus, we can test every coloring for $U$ except coloring consisting of $q$ colors and then branch on $G - U$. We decrease the size of the hub by $q$ and we have only $q^q - q!$ different branching for $U$.
+
+    The number of leaves in the recursion tree, measured as the function of $\ell$, is upper-bounded by the recursive formula
+    $$T(\ell) \leq (q^q - q!) \cdot T(\ell - q)$$
+
+    \todo{compute the real bound}
+\end{proof}
