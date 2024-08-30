@@ -34,11 +34,11 @@ We can see that \prob{$q$-Coloring} is a specific case of \prob{List-$q$-Colorin
 
     \todo{the new proof start here.}
 
-    Fix a constant $\delta = q \times \sigma$. Suppose that for all components $A$ of $G - X$, we have $|N(A)| \leq \delta$, where $N(A)$ denote the neighbourhood of $A$ in $X$. In this case, $X$ is also a $\sdhub$ and we can use the algorithm given by Esmer et al. \cite{esmer2024fundamental} to solve the problem in $\O^\star((q - \varepsilon)^\ell)$.
+    Fix a constant $\delta = q \times \sigma$. Suppose that for all components $A$ of $G - X$, we have $|N(A)| \leq \delta$, where $N(A)$ denotes the neighbourhood of $A$ in $X$. In this case, $X$ is also a $\sdhub$, and we can use the algorithm provided by Esmer et al. \cite{esmer2024fundamental} to solve the problem in time $\O^\star((q - \varepsilon)^\ell)$.
 
     \medskip
 
-    Suppose now that there exists a component $A$ of $G - X$ such that $|N(A) > \delta$. Since $|A| \leq \sigma$, it implies that there exists $u \in A$ such that $N(u) > q$. Consider $U$ a set consisting of $q$ elements of $N(u)$. We know this is impossible that the coloring of $U$ use $q$ colors, or $u$ would not be colorable. Thus, we can test every coloring for $U$ except coloring consisting of $q$ colors and then branch on $G - U$. We decrease the size of the hub by $q$ and we have only $q^q - q!$ different branching for $U$.
+    Now, consider the case where there exists a component $A$ of $G - X$ such that $|N(A)| > \delta$. Since $|A| \leq \sigma$, this implies that there exists a vertex $u \in A$ such that $|N(u)| > q$. Let $U$ be a set consisting of $q$ elements from $N(u)$. It is impossible for the vertices in $U$ to be assigned $q$ distinct colors, as that would render $u$ uncolorable. Therefore, we can test all possible colorings of $U$ except those using exactly $q$ distinct colors, and then branch on $G - U$. This approach reduces the size of the hub by $q$ and involves $q^q - q!$ different branchings for $U$.
 
     The number of leaves in the recursion tree, measured as the function of $\ell$, is upper-bounded by the recursive formula
     $$T(\ell) \leq (q^q - q!) \cdot T(\ell - q)$$
