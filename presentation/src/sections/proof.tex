@@ -1,0 +1,91 @@
+\begin{frame}{Overview}
+    \begin{center}
+        $\O^\star((2 - \varepsilon)^\td)$ for \IS\qquad $\Rightarrow$ \qquad $\O^\star((2 - \varepsilon')^n)$ for SAT
+    \end{center}
+
+    \pause
+
+    \vspace{.5cm}
+
+    Given a formula $\phi$:
+    \begin{enumerate}
+        \item<2-> Build $G = (V, E)$ and $k$ depending on $\phi$ and $\varepsilon$. We want:\begin{itemize}
+            \item<3-> $\td(G) \approx n$,
+            \item<4-> $\phi \in \text{SAT} \Leftrightarrow (G, k) \in \IS$.
+        \end{itemize}
+        \item<5-> Run \IS\ for $(G, k)$ in time $\O^\star((2 - \varepsilon)^\td)$.
+        \item<6-> Return the same answer for the question "$\phi \in \text{SAT}$?".
+        \item<7-> We have an algorithm in $\O^\star((2 - \varepsilon')^n)$ for SAT. Contradicting SETH.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Preliminaries}
+    \begin{itemize}
+        \item Choose $p = f(\varepsilon)$ \only<2->{{\color{red}$= 6$}.}
+        \item<4-> Cut variables into groups of size at most $\lfloor\log\binom{p}{p/2}\rfloor {\color{red} = 4}$.
+    \end{itemize}
+
+    \centering
+
+    \onslide<3->{\input{figures/group-variables.tex}}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Group gadget}
+    \centering
+    \input{figures/group-gadget.tex}
+\end{frame}
+
+\begin{frame}{Clause gadget}
+    \centering
+    \input{figures/clause-gadget.tex}
+\end{frame}
+
+\begin{frame}{Equivalence}
+    \centering
+    \begin{itemize}
+        \item Let $G$ be the combination of group gadgets and clause gadgets.
+        \item Let $k = t(p+1)+ \sum_{i = 1}^m \alpha_i$
+    \end{itemize}
+
+    \vspace{1cm}
+
+    $(G, k) \in \IS \Leftrightarrow \phi \in \text{SAT}$
+\end{frame}
+
+\begin{frame}<0>[label=proof]
+    \frametitle{Treedepth of $G$}
+    \begin{tikzpicture}
+        % \path[draw=red] (-6, -5) -- (7, -5) -- (7, 2) -- (-6, 2) -- cycle;
+        \onslide<25-26>{
+        \node at (0,1.5) {
+            \scalebox{.5}{
+                \input{figures/group-gadget.tex}
+            }
+        };
+        }
+        \onslide<27-29>{
+        \node at (0,1.5) {
+            \scalebox{.5}{
+                \input{figures/clause-gadget.tex}
+            }
+        };
+        }   
+        \node at (3,0) {
+            \input{figures/treedepth-G.tex}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+\againframe<24->{proof}
+
+\begin{frame}{Conclusion of the proof}
+    \begin{itemize}
+        \item $\td(G) = tp + \O(\log n) + c$
+        \item Let $\lambda$ such that $(2 - \varepsilon)^{1 + \lambda} \leq (2 - \varepsilon')$
+        \item Choose $p$ such that $p/(p - \frac{1}{2} + \frac{1}{2} \log(\pi p)) \leq 1 + \lambda$
+        \item We optain $\O^\star((2 - \varepsilon)^{\td(G)}) \leq \O^\star((2 - \varepsilon')^n)$
+    \end{itemize}
+
+    \hfill$\square$
+\end{frame}

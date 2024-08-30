@@ -1,0 +1,73 @@
+\begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
+    \coordinate (A) at (2, 4.6);
+    \coordinate (B) at (2, 3.8);
+    \coordinate (C) at (2, 3);
+    \coordinate (D) at (1, 1.7);
+    \coordinate (E) at (1, .7);
+    \coordinate (F) at (0, 0);
+    \coordinate (G) at (3.5, 3);
+    \coordinate (H) at (3, 2.5);
+    \coordinate (I) at (3, 1.5);
+    \coordinate (J) at (3, .5);
+    \coordinate (K) at (2, 0);
+    \coordinate (L) at (3, 4);
+
+    \node [style=possible] at (A) {};
+    \node [style=possible] at (B) {};
+
+    \draw [style=possibleedge] (A) -- (B);
+
+    \node [style=impossible] at (F) {};
+    \node [style=impossible] at (J) {};
+    \node [style=impossible] at (K) {};
+
+    \draw [style=impossibleedge] (J) -- (K);
+
+    \node<7-> [style=new] at (L) {};
+
+    \draw<7-> [style=newedge] (A) -- (L);
+
+    \node<6-> [style=unknown] at (C) {};
+    \node<6-> [style=unknown] at (D) {};
+    \node<6-> [style=unknown] at (E) {};
+    \node<6-> [style=unknown] at (G) {};
+    \node<6-> [style=unknown] at (H) {};
+    \node<6-> [style=unknown] at (I) {};
+
+    \draw<6-> [style=unknownedge] (C) -- (D);
+    \draw<6-> [style=unknownedge] (C) -- (H);
+    \draw<6-> [style=unknownedge] (D) -- (E);
+    \draw<6-> [style=unknownedge] (G) -- (H);
+    \draw<6-> [style=unknownedge] (H) -- (I);
+
+    \node<7-> [style=result] at (L) {};
+
+    \node [style=vertex,label={[label distance=5pt]180:$n$}]        at (A) {};
+    \node [style=vertex,label={[label distance=5pt]180:\vc}]        at (B) {};
+    \node [style=vertex,label={[label distance=5pt]180:$\shub[2]$}] at (C) {};
+    \node [style=vertex,label={[label distance=5pt]170:\lfvs}]      at (D) {};
+    \node [style=vertex,label={[label distance=5pt]170:\fvs}]       at (E) {};
+    \node [style=vertex,label={[label distance=5pt]270:\oct}]       at (F) {};
+    \node [style=vertex,label={[label distance=5pt]30:$\sdhub$}]   at (G) {};
+    \node [style=vertex,label={[label distance=5pt]0:$\shub$}]    at (H) {};
+    \node [style=vertex,label={[label distance=5pt]0:\td}]        at (I) {};
+    \node [style=vertex,label={[label distance=5pt]0:\pw}]        at (J) {};
+    \node [style=vertex,label={[label distance=5pt]270:\tw}]        at (K) {};
+    \node<7-> [style=vertex,label={[label distance=5pt]30:$\sdhub[2,2]$}]        at (L) {};
+
+    \draw [style=edge] (A) -- (B);
+    \draw<7-> [style=edge] (A) -- (L);
+    \draw<7-> [style=edge] (L) -- (G);
+    \draw<-6> [style=edge] (A) -- (G);
+    \draw [style=edge] (B) -- (C);
+    \draw [style=edge] (C) -- (D);
+    \draw [style=edge] (C) -- (H);
+    \draw [style=edge] (D) -- (E);
+    \draw [style=edge] (D) -- (J);
+    \draw [style=edge] (E) -- (F);
+    \draw [style=edge] (E) -- (K);
+    \draw [style=edge] (G) -- (H);
+    \draw [style=edge] (H) -- (I);
+    \draw [style=edge] (I) -- (J);
+    \draw [style=edge] (J) -- (K);
+\end{tikzpicture}

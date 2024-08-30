@@ -9,9 +9,6 @@
     \tikzstyle{impossibleedge} = [draw=red,line width=5pt];
     \tikzstyle{newedge} = [draw=lime,line width=5pt];
 
-    % This is an invisible rectangle which draw the picture to avoid nodes to move when appear/disappear.
-    \path (0, 0) -- (3.2, 0) -- (3.2, 5) -- (0, 5);
-
     \coordinate (A) at (2, 4.6);
     \coordinate (B) at (2, 3.8);
     \coordinate (C) at (2, 3);
@@ -24,11 +21,14 @@
     \coordinate (J) at (3, .5);
     \coordinate (K) at (2, 0);
 
+    \node<11> [style=result,fill=red!30] at (I) {};
+
     \node<3-> [style=possible] at (A) {};
     \node<4-> [style=possible] at (B) {};
     \node<7-> [style=possible] at (G) {};
 
     \draw<4-> [style=possibleedge] (A) -- (B);
+    \draw<7-> [style=possibleedge] (A) -- (G);
 
     \node<6-> [style=impossible] at (I) {};
     \node<5-> [style=impossible] at (J) {};
@@ -52,7 +52,7 @@
 
     \node<8-> [style=result] at (F) {};
     \node<9-> [style=result] at (H) {};
-    \node<10-> [style=result] at (I) {};
+    \node<10-11> [style=result] at (I) {};
 
     \node [style=vertex,label={[label distance=1pt]180:$n$}]        at (A) {};
     \node [style=vertex,label={[label distance=1pt]180:\vc}]        at (B) {};
@@ -60,13 +60,14 @@
     \node [style=vertex,label={[label distance=1pt]170:\lfvs}]      at (D) {};
     \node [style=vertex,label={[label distance=1pt]170:\fvs}]       at (E) {};
     \node [style=vertex,label={[label distance=1pt]270:\oct}]       at (F) {};
-    \node [style=vertex,label={[label distance=1pt]90:$\sdhub$}]   at (G) {};
+    \node [style=vertex,label={[label distance=1pt]30:$\sdhub$}]   at (G) {};
     \node [style=vertex,label={[label distance=1pt]0:$\shub$}]    at (H) {};
     \node [style=vertex,label={[label distance=1pt]0:\td}]        at (I) {};
     \node [style=vertex,label={[label distance=1pt]0:\pw}]        at (J) {};
     \node [style=vertex,label={[label distance=1pt]270:\tw}]        at (K) {};
 
     \draw [style=edge] (A) -- (B);
+    \draw [style=edge] (A) -- (G);
     \draw [style=edge] (B) -- (C);
     \draw [style=edge] (C) -- (D);
     \draw [style=edge] (C) -- (H);

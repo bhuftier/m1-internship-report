@@ -1,0 +1,50 @@
+\begin{frame}{Other results}
+    \tikzstyle{vertex} = [draw=black,fill=black,circle,inner sep=0pt,minimum size=3pt]
+    \tikzstyle{possible} = [fill=green,circle,inner sep=0pt,minimum size=15pt]
+    \tikzstyle{impossible} = [fill=red,circle,inner sep=0pt,minimum size=15pt]
+    \tikzstyle{new} = [fill=lime,circle,inner sep=0pt,minimum size=15pt]
+    \tikzstyle{unknown} = [fill=yellow,circle,inner sep=0pt,minimum size=15pt]
+    \tikzstyle{result} = [draw=black,circle,dashed,thick,inner sep=0pt,minimum size=25pt]
+    \tikzstyle{edge} = [draw=black,thick]
+    \tikzstyle{possibleedge} = [draw=green,line width=5pt]
+    \tikzstyle{impossibleedge} = [draw=red,line width=5pt]
+    \tikzstyle{newedge} = [draw=lime,line width=5pt]
+    \tikzstyle{unknownedge} = [draw=yellow,line width=5pt]
+
+    \centering
+    \begin{minipage}{.32\textwidth}
+        \centering
+        \input{figures/result-indset.tex}
+
+        \vspace{.5cm}
+
+        \IS
+
+        $\O^\star((2 - \varepsilon)^p)$
+    \end{minipage}
+    \begin{minipage}{.32\textwidth}
+        \centering
+        \input{figures/result-qcol.tex}
+        
+        \vspace{.5cm}
+
+        \prob{$q$-Coloring}
+
+        $\O^\star((q - \varepsilon)^p)$
+    \end{minipage}
+    \begin{minipage}{.32\textwidth}
+        \centering
+        \input{figures/result-domset.tex}
+        
+        \vspace{.5cm}
+        
+        \prob{Dominating Set}
+
+        $\O^\star((3 - \varepsilon)^p)$
+    \end{minipage}
+\end{frame}
+
+\begin{frame}{Thanks}
+    \centering
+    Thanks for your attention!
+\end{frame}

@@ -1,0 +1,59 @@
+\tikzstyle{vertex} = [draw=black,fill=black,circle,inner sep=0pt,minimum size=2pt]
+\tikzstyle{edgeI} = [draw=black]
+\tikzstyle{edgeTree} = [draw=green, line width=1pt]
+\tikzstyle{I} = [orange,line width=2pt]
+\tikzstyle{clause} = [black,line width=2pt]
+\tikzstyle{clique} = [blue,line width=2pt]
+
+\begin{tikzpicture}[scale=0.4]
+    \draw[style=I] (0,0) rectangle (2,4);
+    \foreach \x in {1,...,6}{
+        \node[style=vertex] (I1\x) at (1,.25 + .5*\x) {};
+    }
+    \draw[style=I] (0,7) rectangle (2,11);
+    \foreach \x in {1,...,6}{
+        \node[style=vertex] (I2\x) at (1,7.25 + .5*\x) {};
+    }
+    \draw[style=I] (0,12) rectangle (2,16);
+    \foreach \x in {1,...,6}{
+        \node[style=vertex] (I3\x) at (1,12.25 + .5*\x) {};
+    }
+    \node at (-1,2) {\color{orange}$I_t$};
+    \node at (-1,9) {\color{orange}$I_2$};
+    \node at (-1,14) {\color{orange}$I_1$};
+
+    \node[fill=white,circle,minimum size=15pt] (dots) at (1, 5.5) {};
+    \node at (1, 5.75) {$\vdots$};
+
+    \draw[style=edgeTree] (I11) -- (I12) -- (I13) -- (I14) -- (I15) -- (I16);
+    \draw[style=edgeTree] (I21) -- (I22) -- (I23) -- (I24) -- (I25) -- (I26);
+    \draw[style=edgeTree] (I31) -- (I32) -- (I33) -- (I34) -- (I35) -- (I36);
+    \draw[style=edgeTree] (I16) -- (dots) -- (I21);
+    \draw[style=edgeTree] (I26) -- (I31);
+
+    \foreach \x in {0,...,3}{
+        \draw[style=edgeTree] (-3*\x - 2,-1) -- (I11);
+        \draw[style=clause] (-3*\x - 3,-3) -- (-3*\x - 2,-1) -- (-3*\x - 1,-3) -- cycle;
+    }
+
+    \coordinate (C1) at (3.5, 12);
+    \coordinate (C2) at (3.5, 7);
+    \coordinate (C3) at (3.5, 0);
+
+    \draw[style=edgeTree] (C1) -- (I31);
+    \draw[style=edgeTree] (C2) -- (I21);
+    \draw[style=edgeTree] (C3) -- (I11);
+
+    \node [style=vertex] at (C1) {};
+    \node [style=vertex] at (C2) {};
+    \node [style=vertex] at (C3) {};
+
+    \draw[style=clique] (C1) ellipse (.6cm and 2cm);
+    \draw[style=clique] (C2) ellipse (.6cm and 2cm);
+    \draw[style=clique] (C3) ellipse (.6cm and 2cm);
+
+    \onslide<30->{\draw[style=I,Latex-Latex] (-5,0) -- (-5, 16) node [midway, left] {\color{orange}$tp$};}
+    \onslide<26->{\draw[style=clique,Latex-Latex] (5,-2) -- (5, 2) node [midway, right] {\color{blue}$f_1(p)$};}
+    \onslide<28>{\draw[style=clause,Latex-Latex] (-13,-4) -- (-13, 0) node [midway, left] {$\O(\log(t\binom{p}{p/2}))$};}
+    \onslide<29->{\draw[style=clause,Latex-Latex] (-13,-4) -- (-13, 0) node [midway, left] {$\O(\log n) + f_2(p)$};}
+\end{tikzpicture}
